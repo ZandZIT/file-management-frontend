@@ -11,8 +11,9 @@ import { db } from '../../../firebase';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
-const UpdateFolderModal = ({
-    childFolder,
+const UpdateNameModal = ({
+    isFile,
+    data,
     isOpen,
     onClose
 }) => {
@@ -20,21 +21,21 @@ const UpdateFolderModal = ({
     const [isLoading, setIsLoading] = useState(false)
     const {register, handleSubmit, reset, formState:{errors}} = useForm({
         defaultValues:{
-            name: childFolder.name,
+            name: data.name,
         }
     })
-      const onSubmit = async(data)=>{
-        if( !childFolder) return null
+      const onSubmit = async(value)=>{
+        if( !value) return null
         try{
             setIsLoading(true)
             
             // Update the document to the collection
-            await updateDoc(doc(db, "folders", childFolder.id), {
-                name: data?.name,
+            await updateDoc(doc(db, isFile ? "files" : "folders", data.id), {
+                name: value?.name,
                 createdAt: serverTimestamp()
             });
 
-            toast.success("Folder updated")
+            toast.success("Updated")
             reset()
             
             onClose()            
@@ -60,12 +61,12 @@ const UpdateFolderModal = ({
                     text-gray-900
                     leading-7
                     '>
-                        Add Folder
+                        Update {isFile ? "File" : "Folder"} 
                     </h2>
                     <p className='
                     text-sm text-gray-500 mt-1 leading-6
                     '>
-                        Create a new folder
+                        Set a new name for this {isFile ? "file" : "folder"} 
                     </p>
                 </div>
                 <div className='
@@ -98,7 +99,7 @@ const UpdateFolderModal = ({
                                 disable={isLoading}
                                 type="submit"
                                 >
-                                    <p>Create</p>
+                                    <p>Save</p>
                                 </Button>
                             </div>
                         </div>
@@ -111,10 +112,11 @@ const UpdateFolderModal = ({
   )
 }
 
-UpdateFolderModal.propTypes = {
-    childFolder: PropTypes.object,
+UpdateNameModal.propTypes = {
+    data: PropTypes.object,
+    isFile: PropTypes.bool,
     isOpen: PropTypes.bool,
     onClose: PropTypes.func
 }
 
-export default UpdateFolderModal
+export default UpdateNameModal

@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import ContentActions from "./content-actions";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
-import { Star } from "lucide-react";
 
 const FolderBox = ({folder}) => {
   return (
@@ -23,14 +22,9 @@ const FolderBox = ({folder}) => {
                 <div className="text-xs text-neutral-500 ">
                     {folder.createdAt && format((folder.createdAt)?.toDate(), "PP")}
                 </div>
-                <div className="hidden group-hover:flex h-8 w-8 items-center justify-center bg-neutral-300/50 rounded-full z-20">
-                    {folder.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
-                </div>
+                
             </Link>
-            <div className="absolute right-6 ">
-                <ContentActions folder={folder}/>
-            </div>
-            
+            <ContentActions current={folder}/>            
         </div>
         
     </div>)

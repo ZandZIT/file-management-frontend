@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import ContentActions from "./content-actions";
 import { formatFileSize } from "../../utils";
-import { Star } from "lucide-react";
 
 const iconMap = [
     {
@@ -70,15 +69,10 @@ const FileBox = ({file}) => {
                 <div className="text-xs text-neutral-500 ">
                     {file.createdAt && format((file.createdAt)?.toDate(), "PP")}
                 </div>
-                <div className="hidden group-hover:flex h-8 w-8 items-center justify-center bg-neutral-300/50 rounded-full z-20">
-                    {file.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
-                </div>
+                
             </Link>
-            <div className="absolute right-6 ">
-                <ContentActions folder={file}/>
-            </div>
-        </div>
-        
+            <ContentActions current={file}/>
+        </div>        
     </div>)
 };
 

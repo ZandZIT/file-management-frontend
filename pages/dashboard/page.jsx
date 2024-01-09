@@ -41,7 +41,7 @@ const DashboarPage = () => {
             <div className="relative w-full space-y-4 h-full">
                 <div className="flex flex-col gap-4">
                     
-                    <div className={clsx(" space-y-4 flex flex-col justify-center fixed top-0 right-0 left-12 z-50 p-3 bg-white border-b",
+                    <div className={clsx(" gap-y-4 flex flex-col justify-center fixed top-0 right-0 left-12 z-50 p-3 bg-white border-b",
                         scrolled && 'border-b shadow-sm')}>
                         <Navigation user={user} folder={folder}/>
                         <Path  folder={folder}/>
