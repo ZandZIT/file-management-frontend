@@ -61,7 +61,7 @@ const FileBox = ({file}) => {
                     <div className="text-[10px] ml-7 text-neutral-500">{formatFileSize(file?.size)}</div>
                 </div>
                 <div className="">
-                    <img src={file?.image ? file?.image : "/user-placeholder.png"} className="h-8 w-8 rounded-full hover:opacity-70 hover:border hover:shadow-sm shrink-0  transition" />
+                    <img src={file?.image ? file?.image : "/user-placeholder.png"} className="h-8 w-8 rounded-full hover:opacity-70 hover:border hover:shadow-sm shrink-0 object-cover object-center transition" />
                 </div>
                 <div className="text-xs text-neutral-500 ">
                     {file.createdAt && format((file.createdAt)?.toDate(), "PP")}

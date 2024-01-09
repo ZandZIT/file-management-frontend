@@ -18,7 +18,7 @@ const FolderBox = ({folder}) => {
                     <span className="">{folder.name}</span>
                 </div>
                 <div className="">
-                    <img src={folder?.image ? folder?.image : "/user-placeholder.png"} className="h-8 w-8 rounded-full hover:opacity-70 hover:border hover:shadow-sm shrink-0  transition" />
+                    <img src={folder?.image ? folder?.image : "/user-placeholder.png"} className="h-8 w-8 rounded-full hover:opacity-70 hover:border hover:shadow-sm shrink-0 object-cover object-center  transition" />
                 </div>
                 <div className="text-xs text-neutral-500 ">
                     {folder.createdAt && format((folder.createdAt)?.toDate(), "PP")}

@@ -14,6 +14,7 @@ const DashboarPage = () => {
 
     // console.log(value)
     const {user} = useCurrentUser()
+    console.log(user)
     const {state, onSet} = useCurrentState()
     const {folderId} = useParams()
     const folders = useFolder(folderId, state, false, user?.userType === "ADMIN")

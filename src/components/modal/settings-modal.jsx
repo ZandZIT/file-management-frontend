@@ -10,6 +10,7 @@ import { db, storage } from '../../../firebase'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 import { doc, updateDoc } from 'firebase/firestore'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const SettingsModal = ({
     currentUser,
@@ -26,10 +27,12 @@ const SettingsModal = ({
       const image = watch('image')
       const fileRef = useRef(null)
 
+      const navigate = useNavigate()
+
       const onSubmit = async (data) => {
-        
-        setIsLoading(true);
-        try{
+        if(currentUser?.userType !== "ADMIN") return navigate('/404')
+        try{       
+            setIsLoading(true);
             if(!data.image){
                 await updateDoc(doc(db, 'users', currentUser?.email),{
                     username: data.username

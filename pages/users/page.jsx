@@ -3,15 +3,26 @@ import { db } from "../../firebase";
 import Sidebar from "../../src/components/sidebar/sidebar";
 import UsersList from "./components/user-list";
 import { collection } from "firebase/firestore";
-import Loading from "../../src/components/ui/loading";
+import { useCurrentUser } from "../../src/hooks/use-current-user";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const UsersPage = () => {
+    const user = useCurrentUser()
+    console.log(user)
+    const navigate = useNavigate()
+    
     const [value, loading ] = useCollection(
         collection(db, 'users'),
         {
           snapshotListenOptions: { includeMetadataChanges: true },
         }
     );
+
+   
+    if(user?.userType === "ADMIN") return navigate('/404');
+    
+
     
     // if(loading){
     //     return <Loading />

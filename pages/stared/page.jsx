@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import Sidebar from "../../src/components/sidebar/sidebar";
-import Navigation from "../../src/components/ui/navigation";
 import { useCurrentUser } from "../../src/hooks/use-current-user";
 import { useFolder } from "../../src/hooks/use-folder";
 import Path from "../../src/components/path";
