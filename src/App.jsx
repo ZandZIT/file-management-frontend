@@ -6,13 +6,14 @@ import { auth } from "../firebase"
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Loading from "./components/ui/loading"
 import UsersPage from "../pages/users/page"
+import StaredPage from "../pages/stared/page"
 
 const App = () => {
   const [user, loading] = useAuthState(auth); 
 
   if(loading){
     return (
-      <Loading />
+      <Loading large="large" />
     )
   }
 
@@ -23,7 +24,9 @@ const App = () => {
         !user ? <AuthPage />
         : <>
             <Routes>
-                <Route path="/files" element={<DashboarPage />} />
+                <Route path="/" element={<DashboarPage />} />
+                <Route path="/stared" element={<StaredPage />} />
+                <Route path="/folders/:folderId" element={<DashboarPage />} />
                 <Route path="/users" element={<UsersPage />} />
             </Routes>
           </>

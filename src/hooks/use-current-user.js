@@ -9,6 +9,6 @@ export const useCurrentUser = ()=>{
     const [value, loading] = useDocument(doc(db, "users", user?.email), {
       snapshotListenOptions: { includeMetadataChanges: true },
     });
-    return {user:value?.data(),
+    return {user:{...value?.data(), uid: value?.id},
             loading};
 }

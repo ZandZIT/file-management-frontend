@@ -13,9 +13,9 @@ const UsersPage = () => {
         }
     );
     
-    if(loading){
-        return <Loading />
-    }
+    // if(loading){
+    //     return <Loading />
+    // }
     return ( 
         <Sidebar>
             <div className="space-y-4 ">

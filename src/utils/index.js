@@ -20,3 +20,13 @@ export const createPassword = (text)=>{
   return bcrypt.hashSync(text, salt);
   
 } 
+
+export function formatFileSize(fileSizeInBytes) {
+  if (fileSizeInBytes < 1024) {
+    return fileSizeInBytes + " B";
+  } else if (fileSizeInBytes < 1024 * 1024) {
+    return (fileSizeInBytes / 1024).toFixed(2) + " KB";
+  } else {
+    return (fileSizeInBytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+}

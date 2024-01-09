@@ -15,7 +15,7 @@ const DesktopSidebar = ({
 }) => {
     const [registerModal, setRegisterModal] = useState(false)
     const [settingsModal, setSettingsModal] = useState(false)
-    
+
     const routes = useRoutes()
     
 
@@ -40,7 +40,7 @@ const DesktopSidebar = ({
           sm:flex
           sm:flex-col
           sm:justify-between
-          sm:mb-4
+          sm:pb-6
           ">
             <nav className="
               flex
@@ -52,28 +52,34 @@ const DesktopSidebar = ({
                 </div>
                 <ul role="list"
                 className="flex flex-col items-center space-y-1">
-                    {routes.map((item)=> (
-                        <SidebarItem 
-                          key={item.label}
-                          label={item.label}
-                          active={item?.active}
-                          href={item.href}
-                          icon={item.icon}
-                          onClick={item.onClick}
-                          />
-                    ))}
-                    <SidebarItem    
-                    label={"Add member"}
-                    icon={UserPlus}
-                    onClick={()=> setRegisterModal(true)}
-                    />
+                    {
+                      routes.map((item)=> {
+                        return (currentUser?.userType === "ADMIN" ||
+                        item?.allAccess) && (
+                            <SidebarItem 
+                              key={item.label}
+                              label={item.label}
+                              active={item?.active}
+                              href={item.href}
+                              icon={item.icon}
+                              onClick={item.onClick}
+                              />
+                        )
+                      })
+                    }
+                    { 
+                      currentUser.type === "ADMIN" &&
+                      <SidebarItem    
+                      label={"Add member"}
+                      icon={UserPlus}
+                      onClick={()=> setRegisterModal(true)}
+                      />
+                    }
                 </ul>
     
             </nav>
             <nav className="
-            flex
-            items-center 
-            justify-center
+            mx-auto
             ">
               <div 
               onClick={()=> setSettingsModal(true)}>

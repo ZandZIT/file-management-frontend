@@ -17,7 +17,7 @@ export default function AuthPage() {
         space-y-4
         ">
         <img 
-        src={'/logo.svg'}
+        src={'/logo.png'}
         alt=""
         className="mx-auto h-[100px] w-[100px]"
         />

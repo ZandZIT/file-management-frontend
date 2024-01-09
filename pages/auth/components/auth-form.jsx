@@ -44,7 +44,7 @@ const AuthForm = () => {
     try{
       setIsLoading(true)
       await signInWithEmailAndPassword(auth, data.email,data. password);
-      navigate('/files')
+      navigate('/')
     }catch(error){
       console.log(error)
       toast.error("Somethong went wrong")

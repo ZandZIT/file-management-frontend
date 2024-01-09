@@ -16,3 +16,5 @@ npm i zustand
 npm install firebase
 npm i react-select
 npm install --save react-firebase-hooks
+npm install date-fns --save
+npm install --save react-dropzone

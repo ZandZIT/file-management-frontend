@@ -6,16 +6,14 @@ const Avater = ({
   large
 }) => {
   return (
-    <div className='relative'>
-        <div className={clsx(`relative
-        overflow-hidden
-        h-6
-        w-6
+    <div className=''>
+        <div className={clsx(`
+        h-6 w-6
         sm:h-8 sm:w-8
-        rounded-full
+        overflow-hidden
         cursor-pointer`,
         large && "sm:h-[80px] sm:w-[80px]")}>
-          <img src={currentUser?.image ? currentUser.image  : '/user-placeholder.png'} alt='user' />    
+          <img className='rounded-full h-full w-full object-cover object-center' src={currentUser?.image ? currentUser?.image  : '/user-placeholder.png'} alt='user' />    
         </div>
     </div>
   )

@@ -9,16 +9,17 @@ import { useCurrentState } from "../../src/hooks/use-current-state";
 import { useEffect } from "react";
 import ContentList from "../../src/components/contents/content-list";
 
-const DashboarPage = () => {
+const StaredPage = () => {
     // let value = useLocation();
 
     // console.log(value)
-    const {user} = useCurrentUser()
+
     const {state, onSet} = useCurrentState()
     const {folderId} = useParams()
-    const folders = useFolder(folderId, state, false, user?.userType === "ADMIN")
+    const folders = useFolder(folderId, state, true)
     const {folder, childFolders, childFiles} = folders;
 
+    const {user} = useCurrentUser()
 
     useEffect(()=>{
         if(folder && folderId){
@@ -29,20 +30,22 @@ const DashboarPage = () => {
     // console.log('folders :', folders)
     // console.log('state :', state?.folder)
 
-    
-
     return ( 
         <Sidebar >
             <div className="space-y-4 h-full">
                 <div className="flex flex-col  space-y-2">
-                    <Navigation user={user} folder={folder}/>
-                    <Path  folder={folder}/>
-                    {(childFolders?.length > 0 || childFiles?.length > 0)  && <ContentList folders={childFolders} files={childFiles} />}
-                    {childFolders?.length === 0 && childFiles?.length === 0 && <EmptyState user={user} folder={folder} /> }
+                    <div className="border-b py-4 px-6">
+                        <h4 className="text-lg">Stared</h4>
+                    </div>
+                    <div className="mt-10">
+                        <Path  folder={folder}/>
+                        {(childFolders?.length > 0 || childFiles?.length > 0)  && <ContentList folders={childFolders} files={childFiles} />}
+                        {childFolders?.length === 0 && childFiles?.length === 0 && <EmptyState user={user} folder={folder} /> }
+                    </div>
                 </div>
             </div>
         </Sidebar>
      );
 }
  
-export default DashboarPage;
+export default StaredPage;

@@ -9,7 +9,7 @@ const Sidebar = ({
     const {user, loading} = useCurrentUser()
     
     if(loading){
-      return <Loading />
+      return <Loading  large="large"/>
     }
     
     return (

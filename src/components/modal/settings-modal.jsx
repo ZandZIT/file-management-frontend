@@ -35,8 +35,8 @@ const SettingsModal = ({
                     username: data.username
                 })
             }
-            const imageRef = ref(storage, `users/profiles`);
-            await uploadString(imageRef, image, 'data_url').then( async Spanshot => {
+            const imageRef = ref(storage, `users/${currentUser?.email}/profile`);
+            await uploadString(imageRef, image, 'data_url').then( async (Spanshot) => {
                 const downloadURL = await getDownloadURL(imageRef)
                 await updateDoc(doc(db, 'users', currentUser?.email),{
                     image: downloadURL,
@@ -104,7 +104,7 @@ const SettingsModal = ({
                         </label>
                         <div className="flex items-center gap-x-4">
                             <img
-                            className="rounded-full h-10 w-10"
+                            className="rounded-full object-cover h-10 w-10"
                             src={image ? image : "/user-placeholder.png"}
                             alt='image'
                             /> 
