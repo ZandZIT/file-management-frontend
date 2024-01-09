@@ -9,7 +9,7 @@ const Path = ({folder }) => {
         path = [...path, ...folder.path]
     }
     return ( 
-        <div className='px-4 '>
+        <div className='px-4'>
             <div className='flex items-center flex-wrap gap-x-2 '>
                 {/* <div className='flex items-center '>
                     <div className='px-4 py-1 bg-transparent hover:bg-neutral-200/50 w-fit rounded-full transition-all cursor-pointer'>

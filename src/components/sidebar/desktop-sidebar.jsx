@@ -68,7 +68,7 @@ const DesktopSidebar = ({
                       })
                     }
                     { 
-                      currentUser.type === "ADMIN" &&
+                      currentUser.userType === "ADMIN" &&
                       <SidebarItem    
                       label={"Add member"}
                       icon={UserPlus}

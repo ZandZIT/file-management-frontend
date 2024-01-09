@@ -4,7 +4,7 @@ import { ROOT_FOLDER } from '../../hooks/use-folder'
 import PropTypes from 'prop-types'
 import { collections, db, storage } from '../../../firebase'
 import { addDoc,  doc,  serverTimestamp, updateDoc } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadString } from 'firebase/storage'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import toast from 'react-hot-toast'
 
 const FileUpload = ({
@@ -13,11 +13,7 @@ const FileUpload = ({
     setCount,
     setIsLoading
 })=>{
-    // const { getRootProps, getInputProps } = useDropzone({ 
-    //    maxSize: 20971520,
-    //     onDrop: handleDrop, 
-    //     disabled,
-    //   });
+
     const maxSize = 20971520
     
     const handleDrop = (files) =>{
@@ -57,7 +53,7 @@ const FileUpload = ({
             })
         
             const fileRef = ref(storage, `/files/${user.uid}/${filePath}`)
-            await uploadString(fileRef, file)
+            await uploadBytes(fileRef, file)
             .then( async () => {
                 const downloadURL = await getDownloadURL(fileRef)
                 await updateDoc(doc(db, 'files', docRef.id),{

@@ -24,7 +24,7 @@ const Navigation = ({user, folder}) => {
         user={user}
         isOpen={newFileModal}
         onClose={()=> setNewFileModal(false)} />
-        <div className="my-4">
+        <div className="">
             <div className="flex flex-1 items-center justify-between px-4">
                 <h4 className=" font-medium">Documents</h4>
                 <div className="flex items-center gap-x-4">

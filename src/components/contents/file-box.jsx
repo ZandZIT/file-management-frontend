@@ -27,6 +27,10 @@ const iconMap = [
         src: '/image/file-format/doc.png'
     },
     {
+        type: "docx",
+        src: '/image/file-format/doc.png'
+    },
+    {
         type: "ppt",
         src: '/image/file-format/ppt.png'
     },

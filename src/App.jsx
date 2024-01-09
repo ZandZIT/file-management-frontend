@@ -19,7 +19,7 @@ const App = () => {
   }
 
   return (
-    <div className=" min-h-screen">
+    <div className=" max-h-screen">
       <ToastProvider/>
       {
         !user ? <AuthPage />
