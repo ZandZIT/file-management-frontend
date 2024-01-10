@@ -2,47 +2,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import ContentActions from "./content-actions";
-import { formatFileSize } from "../../utils";
+import { formatFileSize, iconMap } from "../../utils";
 
-const iconMap = [
-    {
-        type: "jpg" ,
-        src: '/image/file-format/png.png'
-    },
-    {
-        type:  "png",
-        src: '/image/file-format/png.png'
-    },
-    {
-        type:  "jpeg" ,
-        src: '/image/file-format/png.png'
-    },
-    {
-        type: "pdf",
-        src: '/image/file-format/pdf.png'
-    },
-    {
-        type: "doc",
-        src: '/image/file-format/doc.png'
-    },
-    {
-        type: "docx",
-        src: '/image/file-format/doc.png'
-    },
-    {
-        type: "ppt",
-        src: '/image/file-format/ppt.png'
-    },
-    {
-        type: "xlsx",
-        src: '/image/file-format/sheets.png'
-    },
-    {
-        type: "mp4",
-        src: '/image/file-format/video.png'
-    },
-
-]
 
 const FileBox = ({file}) => {
   const fileFormat = iconMap.find(icon => icon.type === file.name.split('.')[1])
@@ -79,5 +40,5 @@ const FileBox = ({file}) => {
 FileBox.propTypes = {
   file: PropTypes.object,
 };
+
 export default FileBox;
-// 

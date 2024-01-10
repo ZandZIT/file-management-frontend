@@ -8,14 +8,16 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import toast from 'react-hot-toast'
 
 const FileUpload = ({
+    expiredDate,
     currentFolder,
     user,
     setCount,
+    setState,
+    onClose,
     setIsLoading
 })=>{
 
     const maxSize = 20971520
-    
     const handleDrop = (files) =>{
         if(!files.length) return 
 
@@ -46,6 +48,7 @@ const FileUpload = ({
             const docRef = await addDoc(collections.files, {
                 name: file.name,
                 createdAt: serverTimestamp(),
+                expiredAt: expiredDate,
                 folderId: currentFolder?.id,
                 userId: user.uid,
                 size: file.size,
@@ -68,6 +71,8 @@ const FileUpload = ({
         }finally{
             setIsLoading(false)
             setCount(0)
+            setState(1)
+            onClose()
         }
         
     }
@@ -115,10 +120,13 @@ const FileUpload = ({
 
 
 FileUpload.propTypes = {
+    expiredDate: PropTypes.object,
     currentFolder: PropTypes.object,
     user: PropTypes.object,
     setCount: PropTypes.func,
-    setIsLoading: PropTypes.func
+    setIsLoading: PropTypes.func,
+    setState: PropTypes.func,
+    onClose: PropTypes.func
 }
 
 export default FileUpload;

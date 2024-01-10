@@ -5,17 +5,18 @@ import { Fragment, useState, } from 'react'
 import PropTypes from 'prop-types'
 import UpdateNameModal from '../modal/update-name-modal'
 import AlertModal from '../modal/alert-modal'
-import { doc, updateDoc } from 'firebase/firestore'
-import { db } from '../../../firebase'
 import toast from 'react-hot-toast'
+import { getTotalFilesByUser } from '../../../actions/get-total-files'
+import { getDeleteDocById } from '../../../actions/get-delete-doc'
+import { getRenameDocById } from '../../../actions/get-rename-doc'
 
   
 
 export default function ContentActions({current}) {
   const [renameModal, setRenameModal] = useState(false)
   const [alertModal, setAlertModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  console.log(current)
   const links = [
     { action: () => setRenameModal(true), label: 'Rename', icon: PencilLine },
     { action: (current) => handleStar(current), label: 'Star', icon: Star },
@@ -25,47 +26,38 @@ export default function ContentActions({current}) {
   ]
 
 
-  const handleStar = (data) => {
+  const handleStar = async(data) => {
     if(data?.type){
-      if(!data?.star){
-        updateDoc(doc(db, 'files', data.id), {
-          star: true
-        }).then(() =>{
-          toast.success(`${data.name} is stared`)
-        }).catch(error => {
-          console.log(error)
-          toast.error("Somethong went wrong")
-        })
-      }else{
-        updateDoc(doc(db, 'files', data.id), {
-          star: false
-        }).then(() =>{
-          toast.success(`${data.name} is unstared`)
-        }).catch(error => {
-          console.log(error)
-          toast.error("Somethong went wrong")
-        })
-      }
+      await getRenameDocById("files", data);
+    
     }else{
-      if(!data?.star){
-        updateDoc(doc(db, 'folders', data.id), {
-          star: true
-        }).then(() =>{
-          toast.success(`${data.name} is stared`)
-        }).catch(error => {
-          console.log(error)
-          toast.error("Somethong went wrong")
-        })
-      }else{
-        updateDoc(doc(db, 'folders', data.id), {
-          star: false
-        }).then(() =>{
-          toast.success(`${data.name} is stared`)
-        }).catch(error => {
-          console.log(error)
-          toast.error("Somethong went wrong")
-        })
-      }
+      await getRenameDocById("folders", data);
+    }
+  }
+
+  const onDelete = async()=>{
+    if(!current) return null
+    try{
+        setIsLoading(true)
+        if(current?.type){
+          await getDeleteDocById("files", current.id).then((doc)=> {
+            toast.success("File deleted")
+          });
+        }else{
+          const totalNumberOfFiles = await getTotalFilesByUser(current)
+          if(totalNumberOfFiles > 0){
+            return toast.error("Delete all the files within the folder")
+          }
+          await getDeleteDocById("folders", current.id).then((doc)=> {
+            toast.success("Folder deleted")
+          });
+        }
+        setAlertModal(false)     
+    }catch (error) {
+        console.error('Error creating ', error);
+        toast.error("Something went wrong");
+    }finally{
+        setIsLoading(false)
     }
   }
 
@@ -80,12 +72,13 @@ export default function ContentActions({current}) {
     onClose={()=> setRenameModal(false)}
     />
     <AlertModal
-    data={current}
+    disabled={isLoading}
     isOpen={alertModal}
+    onAction={onDelete}
     onClose={()=> setAlertModal(false)}
     />
-    <div className="absolute right-6 ">
-      <div className="flex items-center gap-x-4">
+    <div className="absolute right-8 ">
+      <div className="flex items-center gap-x-1">
           <button onClick={()=>handleStar(current)}  className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {current.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
           </button>
@@ -93,7 +86,7 @@ export default function ContentActions({current}) {
               {<PencilLine className="h-4 w-4" />}
           </button> 
           <button onClick={()=> setAlertModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
-              {<Trash className="h-4 w-4 " />}
+              {<Trash className="h-4 w-4 text-rose-500" />}
           </button>
       </div>
       <div className="relative block md:hidden">

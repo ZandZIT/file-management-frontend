@@ -34,4 +34,3 @@ FolderBox.propTypes = {
   folder: PropTypes.object,
 };
 export default FolderBox;
-// 

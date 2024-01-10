@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import FileUpload from '../ui/file-upload';
 import Loading from '../ui/loading';
+import Button from '../ui/button';
+import DateSelect from '../ui/date-picker';
 
 const NewFileModal = ({
     currentFolder,
@@ -14,46 +16,15 @@ const NewFileModal = ({
 }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [count, setCount] = useState(0)
-    // const {register, handleSubmit, reset, formState:{errors}} = useForm({
-    //     defaultValues:{
-    //         file: [],
-    //     }
-    // })
-    //   const onSubmit = async(data)=>{
-    //     if(!currentFolder) return null
-    //     try{
-    //         setIsLoading(true)
-    //         const path = [...currentFolder.path]
-    //         if(currentFolder !== ROOT_FOLDER){
-    //             path.push({name: currentFolder.name, id: currentFolder.id})
-    //         }
-    //         // Create a new folder in the firestores
-    //         // Add the document to the collection
-    //         await addDoc(collections.folders, {
-    //             name: data?.name,
-    //             parentId: currentFolder?.id,
-    //             userId: user?.uid,
-    //             path,
-    //             createdAt: serverTimestamp()
-    //         });
-
-    //         toast.success("Folder created")
-    //         reset()
-    //         onClose()            
-    //     }catch (error) {
-    //         console.error('Error creating user:', error);
-    //         toast.error("Something went wrong");
-    //     }finally{
-    //         setIsLoading(false)
-    //     }
-    //   }
+    const [state, setState] = useState(1);
+    const [startDate, setStartDate] = useState(new Date())
     
   return (
     <Modal 
     isOpen={isOpen} 
     onClose={onClose}>
         
-            <div className='space-y-8 h-[360px] flex flex-col'>
+            <div className='space-y-8 h-[420px] flex flex-col'>
                 <div className='
                 border-b pb-4 border-gray-900/10
                 '>  
@@ -70,21 +41,53 @@ const NewFileModal = ({
                         Upload a new file
                     </p>
                 </div>
-                <div className='space-y-4 pb-10 flex-1 items-center justify-center flex'>
+                {state === 1 && 
+                <div className='h-full flex flex-col transition-all ease-in-out justify-between'>
+                    <DateSelect 
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    />
+                    <div className='ml-auto'>
+                        <Button 
+                        onClick={()=> setState(state + 1)}
+                        type={'button'}
+                        >
+                            <div>Next</div>
+                        </Button>
+                    </div>
+                </div>}
+                {state === 2 && 
+                (<div className='space-y-4 flex-1 items-center justify-center flex flex-col '>
                     
                         { isLoading && count ? 
                         <div>
                             <Loading /> 
                             <div className='text-gray-700/70 font-medium text-center tracking-widest text-xs mt-2'>Uploading {count} files</div>
                         </div>
-                        : <FileUpload  
+                        : 
+                        (<>
+                            <FileUpload  
+                            expiredDate={startDate}
                             currentFolder={currentFolder} 
                             user={user} 
                             setCount={setCount}
+                            setState={setState}
+                            onClose={onClose}
                             setIsLoading={setIsLoading} />
+                            <div className='mr-auto'>
+                                <Button 
+                                secondary
+                                onClick={()=> setState(state - 1)}
+                                type={'button'}
+                                >
+                                    <div>Back</div>
+                                </Button>
+                            </div>
+                        </>)
+                        
                         }
 
-                </div>
+                </div>)}
             </div>
     </Modal>
   )

@@ -26,8 +26,6 @@ const StaredPage = () => {
         }
     },[folderId, folder, onSet])
 
-    // console.log('folders :', folders)
-    // console.log('state :', state?.folder)
 
     return ( 
         <Sidebar >

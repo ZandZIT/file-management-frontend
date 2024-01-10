@@ -18,3 +18,4 @@ npm i react-select
 npm install --save react-firebase-hooks
 npm install date-fns --save
 npm install --save react-dropzone
+npm install react-datepicker --save

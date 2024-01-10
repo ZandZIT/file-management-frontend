@@ -1,43 +1,25 @@
 
-import  { useState } from 'react'
 import Modal from './modal'
 import PropTypes from 'prop-types';
 
 import { useForm } from "react-hook-form"
 
 import Button from '../ui/button';
-import { db } from '../../../firebase';
-import { deleteDoc, doc } from 'firebase/firestore';
-import toast from 'react-hot-toast';
+
 
 const AlertModal = ({
-    data,
+    disabled,
     isOpen,
-    onClose
+    onClose,
+    onAction
 }) => {
-    const [isLoading, setIsLoading] = useState(false)
     const { handleSubmit} = useForm()
       
-    const onSubmit = async()=>{
-        if(!data) return null
-        try{
-            setIsLoading(true)
-            await deleteDoc(doc(db, "folders", data.id));
-            toast.success("Folder deleted")
-            onClose()            
-        }catch (error) {
-            console.error('Error creating ', error);
-            toast.error("Something went wrong");
-        }finally{
-            setIsLoading(false)
-        }
-      }
-    
-  return (
+    return (
     <Modal 
     isOpen={isOpen} 
     onClose={onClose}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onAction)}>
             <div className='space-y-8'>
                 <div className='
                 border-b pb-4 border-gray-900/10
@@ -47,7 +29,7 @@ const AlertModal = ({
                     text-gray-900
                     leading-7
                     '>
-                        Delete Folder
+                        Delete 
                     </h2>
                     <p className='
                     text-sm text-gray-500 mt-1 leading-6
@@ -65,14 +47,14 @@ const AlertModal = ({
                             <div className="flex items-center gap-x-2">
                                 <Button 
                                 onClick={onClose}
-                                disable={isLoading}
+                                disable={disabled}
                                 type="button"
                                 secondary
                                 >
                                     <p>Cancel</p>
                                 </Button>
                                 <Button 
-                                disable={isLoading}
+                                disable={disabled}
                                 type="submit"
                                 danger
                                 >
@@ -90,9 +72,11 @@ const AlertModal = ({
 }
 
 AlertModal.propTypes = {
-    data: PropTypes.object,
+    disabled: PropTypes.bool,
     isOpen: PropTypes.bool,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    onAction: PropTypes.func
+
 }
 
 export default AlertModal
