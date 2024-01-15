@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Sidebar from "../../src/components/sidebar/sidebar";
 import Navigation from "../../src/components/ui/navigation";
 import { useCurrentUser } from "../../src/hooks/use-current-user";
@@ -6,7 +6,7 @@ import { useFolder } from "../../src/hooks/use-folder";
 import Path from "../../src/components/path";
 import EmptyState from "../../src/components/ui/empty-state";
 import { useCurrentState } from "../../src/hooks/use-current-state";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ContentList from "../../src/components/contents/content-list";
 import Title from "../../src/components/ui/title";
 import { useScrollTop } from "../../src/hooks/use-scroll";

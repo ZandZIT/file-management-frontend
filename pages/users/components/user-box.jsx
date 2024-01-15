@@ -10,7 +10,7 @@ const UserBox = ({
     user
 }) => {
     const [settingsModal, setSettingsModal] = useState(false)
-    // const [alertModal, setAlertModal] = useState(false)
+    const [alertModal, setAlertModal] = useState(false)
     // const [isLoading, setIsLoading] = useState(false)
   
     

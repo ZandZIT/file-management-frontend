@@ -11,41 +11,52 @@ import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 import { doc, updateDoc } from 'firebase/firestore'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { useCurrentUser } from '../../hooks/use-current-user'
+import Select from '../inputs/select'
+import { types } from '../../utils'
 
 const SettingsModal = ({
     currentUser,
     isOpen,
     onClose
 }) => {
+    const {user: authUser} = useCurrentUser()
     const [isLoading, setIsLoading] = useState(false)
     const {register, handleSubmit, watch, setValue, formState:{errors}} = useForm({
         defaultValues:{
             username: currentUser?.username ,
-            image: currentUser?.image
+            image: currentUser?.image,
+            type: types.filter(type => type.value === currentUser.userType)[0]
         }
       })
       const image = watch('image')
+      const userType = watch('type')
       const fileRef = useRef(null)
 
       const navigate = useNavigate()
 
       const onSubmit = async (data) => {
-        if(currentUser?.userType !== "ADMIN") return navigate('/404')
+        if(!authUser) return null;
+        if(authUser?.userType !== "ADMIN") return navigate('/404')
         try{       
             setIsLoading(true);
             if(!data.image){
                 await updateDoc(doc(db, 'users', currentUser?.email),{
-                    username: data.username
+                    username: data.username,
+                    userType: data.type.value
                 })
+            }else{
+                const imageRef = ref(storage, `users/${currentUser?.email}/profile`);
+                await uploadString(imageRef, image, 'data_url').then( async (Spanshot) => {
+                    const downloadURL = await getDownloadURL(imageRef)
+                    await updateDoc(doc(db, 'users', currentUser?.email),{
+                        image: downloadURL,
+                        username: data.username,
+                        userType: data.type.value
+                    })
+                });
             }
-            const imageRef = ref(storage, `users/${currentUser?.email}/profile`);
-            await uploadString(imageRef, image, 'data_url').then( async (Spanshot) => {
-                const downloadURL = await getDownloadURL(imageRef)
-                await updateDoc(doc(db, 'users', currentUser?.email),{
-                    image: downloadURL,
-                    username: data.username
-                })
-            });
+            
             onClose()
             toast.success("Upadated")
         }catch(error){
@@ -100,6 +111,14 @@ const SettingsModal = ({
                     label="Username"
                     required
                     register={register}
+                    />
+                    <Select
+                    disabled={isLoading}
+                    label={"Select user types"}
+                    value={userType}
+                    options={types}
+                    required
+                    onChange={(type)=> { setValue('type', type)}}
                     />
                     <div className="space-y-2">
                         <label className="text-sm font-medium leading-6 block">
