@@ -5,13 +5,14 @@ import SettingsModal from '../../../src/components/modal/settings-modal';
 import clsx from 'clsx';
 
 import { PencilLine, Trash } from 'lucide-react';
+import AlertModal from '../../../src/components/modal/alert-modal';
 
 const UserBox = ({
     user
 }) => {
     const [settingsModal, setSettingsModal] = useState(false)
     const [alertModal, setAlertModal] = useState(false)
-    // const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
   
     
     return ( 
@@ -20,6 +21,11 @@ const UserBox = ({
         currentUser={user}
         isOpen={settingsModal}
         onClose={()=> setSettingsModal(false)} />
+        <AlertModal
+        disabled={isLoading}
+        isOpen={alertModal}
+        onClose={()=> setAlertModal(false)}
+        />
         <div className="group border-b py-2 px-4 cursor-pointer transition-all hover:bg-neutral-200/50">
             <div className="flex items-center justify-between gap-y-2 gap-x-6">
                 <div 

@@ -10,6 +10,10 @@ import { getTotalFilesByUser } from '../../../actions/get-total-files'
 import { getDeleteDocById } from '../../../actions/get-delete-doc'
 import { getRenameDocById } from '../../../actions/get-rename-doc'
 import FilePreviewModal from '../modal/file-preview-modal'
+import { useCurrentState } from '../../hooks/use-current-state'
+import { ROOT_FOLDER } from '../../hooks/use-folder'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useCurrentUser } from '../../hooks/use-current-user'
 
   
 
@@ -18,6 +22,10 @@ export default function ContentActions({current}) {
   const [alertModal, setAlertModal] = useState(false)
   const [previewModal, setPreviewModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
+  const {state} = useCurrentState()
+  const {user} = useCurrentUser()
+
 
   const links = [
     { action: () => setRenameModal(true), label: 'Rename', icon: PencilLine },
@@ -41,8 +49,13 @@ export default function ContentActions({current}) {
     if(!current) return null
     try{
         setIsLoading(true)
+        const filePath =
+            state === ROOT_FOLDER
+                ? `${state.path.join("/")}/${current.name}`
+                : `${state.path.join("/")}/${state.name}/${current.name}`
+
         if(current?.type){
-          await getDeleteDocById("files", current.id).then((doc)=> {
+          await getDeleteDocById("files", current.id, filePath, user).then((doc)=> {
             toast.success("File deleted")
           });
         }else{
@@ -93,9 +106,10 @@ export default function ContentActions({current}) {
           <button onClick={()=>handleStar(current)}  className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {current.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
           </button>
+          {!current.type &&
           <button  type="button" onClick={()=> setRenameModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {<PencilLine className="h-4 w-4" />}
-          </button> 
+          </button> }
           <button onClick={()=> setAlertModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {<Trash className="h-4 w-4 text-rose-500" />}
           </button>

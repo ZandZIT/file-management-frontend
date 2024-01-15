@@ -41,13 +41,13 @@ const Navigation = ({user, folder}) => {
                 <h4 className=" font-medium">Documents</h4>
                 <div className="flex items-center gap-x-4">
                     <div className="sm:flex items-center gap-x-4 hidden">
-                    <Button 
+                    {/* <Button 
                     type='button'
                     secondary
                     onClick={()=>{}}
                     >
                         <Search  size={15} className="text-gray-900" />
-                    </Button>
+                    </Button> */}
                     <Button 
                     type='button'
                     secondary

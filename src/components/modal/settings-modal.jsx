@@ -33,14 +33,11 @@ const SettingsModal = ({
       const userType = watch('type')
       const fileRef = useRef(null)
 
-      const navigate = useNavigate()
-
       const onSubmit = async (data) => {
-        if(!authUser) return null;
-        if(authUser?.userType !== "ADMIN") return navigate('/404')
+       
         try{       
             setIsLoading(true);
-            if(!data.image){
+            if(!data.image || data.image.startsWith('https://') ){
                 await updateDoc(doc(db, 'users', currentUser?.email),{
                     username: data.username,
                     userType: data.type.value
@@ -112,6 +109,7 @@ const SettingsModal = ({
                     required
                     register={register}
                     />
+                    {authUser.userType === "ADMIN" &&
                     <Select
                     disabled={isLoading}
                     label={"Select user types"}
@@ -119,7 +117,7 @@ const SettingsModal = ({
                     options={types}
                     required
                     onChange={(type)=> { setValue('type', type)}}
-                    />
+                    />}
                     <div className="space-y-2">
                         <label className="text-sm font-medium leading-6 block">
                             Photo

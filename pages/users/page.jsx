@@ -9,7 +9,6 @@ import { useEffect } from "react";
 
 const UsersPage = () => {
     const user = useCurrentUser()
-    console.log(user)
     const navigate = useNavigate()
     
     const [value, loading ] = useCollection(

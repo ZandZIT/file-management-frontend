@@ -9,7 +9,7 @@ export const getRenameDocById = async(type, data) => {
     updateDoc(docRef, {
       star: !data?.star,
     }).then(() => {
-        toast.success(`${data.name} is ${data?.star ? "stared" : "Unstared"}`);
+        toast.success(`${data.name} is ${data?.star ? "Unstared" : "Stared"}`);
       })
       .catch((error) => {
         console.log(error);

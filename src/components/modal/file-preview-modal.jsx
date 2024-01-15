@@ -10,7 +10,6 @@ const FilePreviewModal = ({
     file,
 }) => {
     const documents = [{ uri: file.downloadURL, fileType: file?.type }];
-    console.log(file.downloadURL)
   return (
     <Transition.Root
         as={Fragment}
