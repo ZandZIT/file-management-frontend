@@ -2,20 +2,15 @@ import PropTypes from 'prop-types'
 import { X } from 'lucide-react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
-import DocViewer, { PDFRenderer, PNGRenderer } from 'react-doc-viewer';
-
+import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 
 const FilePreviewModal = ({
     isOpen,
     onClose,
-    fileUrl,
-    type
+    file,
 }) => {
-    const documents = [{ uri: fileUrl, fileType: type }];
-    // const fileOptions = {
-    //     fileType: type,
-    //     // Add more options if needed, depending on the file type
-    // };
+    const documents = [{ uri: file.downloadURL, fileType: file?.type }];
+    console.log(file.downloadURL)
   return (
     <Transition.Root
         as={Fragment}
@@ -59,19 +54,16 @@ const FilePreviewModal = ({
                             transform 
                             overflow-hidden 
                             rounded-lg 
-                            h-full                          
-                            px-4 
-                            pb-4
-                            pt-5 
+                            h-full                                                       
                             text-left 
                             shadow-xl 
                             transition-all
                             w-full
                             sm:w-full 
-                            sm:p-6
+                            
                             '>
-                                <div className=" w-full h-full   z-10">
-                                    <div className='absolute right-5   '>
+                                <div className=" w-full h-full z-[9999]">
+                                    <div className='absolute right-3 top-5  '>
                                     
                                         <button
                                         onClick={onClose}
@@ -90,11 +82,27 @@ const FilePreviewModal = ({
                                         </button>
                                     
                                     </div>
-                                    <div className='h-full flex items-center justify-center'>
-                                    {/* <DocViewer documents={documents} /> */}
+                                    <div className='h-screen max-w-7xl flex items-center justify-center mx-auto'>
                                     <DocViewer
-                                      pluginRenderers={[PDFRenderer, PNGRenderer]}
-                                     documents={documents} />
+                                      pluginRenderers={DocViewerRenderers}
+                                      className='w-full h-full '
+                                      config={{
+                                        header: {
+                                         disableHeader: true,
+                                         disableFileName: false,
+                                         retainURLParams: false
+                                      }}}
+                                      theme={{
+                                        primary: "#5296d8",
+                                        secondary: "#ffffff",
+                                        tertiary: "#5296d899",
+                                        text_primary: "#ffffff",
+                                        text_secondary: "#5296d8",
+                                        text_tertiary: "#00000099",
+                                        disableThemeScrollbar: false,
+                                      }}
+                                      documents={documents} />
+                                      
                                     </div> 
                                 </div>
                                 
@@ -111,9 +119,7 @@ const FilePreviewModal = ({
 FilePreviewModal.propTypes = {
     isOpen: PropTypes.bool,
     onClose: PropTypes.func,
-    fileUrl: PropTypes.string,
-    type: PropTypes.string
-
+    file: PropTypes.object,
 }
 
 export default FilePreviewModal

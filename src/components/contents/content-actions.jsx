@@ -73,12 +73,11 @@ export default function ContentActions({current}) {
     isOpen={renameModal}
     onClose={()=> setRenameModal(false)}
     />
-    <FilePreviewModal
-    fileUrl={current.downloadURL}
+    {<FilePreviewModal
+    file={current}
     isOpen={previewModal}
-    type={current.type}
     onClose={()=> setPreviewModal(false)}
-    />
+    />}
     <AlertModal
     disabled={isLoading}
     isOpen={alertModal}
@@ -87,9 +86,10 @@ export default function ContentActions({current}) {
     />
     <div className="absolute right-8 ">
       <div className="flex items-center gap-x-1">
+          {current.type && 
           <button  type="button" onClick={()=> setPreviewModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {<Eye className="h-4 w-4" />}
-          </button> 
+          </button> }
           <button onClick={()=>handleStar(current)}  className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {current.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
           </button>

@@ -15,6 +15,9 @@ const ContentList = ({ folders, files }) => {
 
   useEffect(()=>{
     if(isFile) setFileItems(files?.filter(file => file.type == type))
+    else{
+      setFileItems(files)
+    }
   },[type, isFile, files])
 
   return (

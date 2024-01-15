@@ -73,6 +73,11 @@ export const filter = [
     src: "/image/file-format/ppt.png",
   },
   {
+    id: "pptx",
+    name: "Pptx",
+    src: "/image/file-format/ppt.png",
+  },
+  {
     id: "xlsx",
     name: "Xlsx",
     src: "/image/file-format/sheets.png",
@@ -123,6 +128,10 @@ export const iconMap = [
   },
   {
     type: "ppt",
+    src: "/image/file-format/ppt.png",
+  },
+  {
+    type: "pptx",
     src: "/image/file-format/ppt.png",
   },
   {
