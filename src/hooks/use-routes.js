@@ -1,5 +1,5 @@
 import { signOut } from "firebase/auth";
-import { File, LogOut, Star, UsersRound } from "lucide-react";
+import { BellDot, File, LogOut, Star, UsersRound } from "lucide-react";
 import { useMemo } from "react";
 import { auth } from "../../firebase";
 
@@ -34,6 +34,13 @@ export const useRoutes = () => {
         icon: UsersRound,
         active: pathname === "/users",
         allAccess: false,
+      },
+      {
+        label: "Notification",
+        href: "/expired",
+        icon: BellDot,
+        active: pathname === "/expired",
+        allAccess: true,
       },
       {
         label: "Logout",

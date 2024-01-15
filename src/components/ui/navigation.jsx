@@ -5,11 +5,19 @@ import { useState } from "react";
 
 import PropTypes from 'prop-types'
 import NewFileModal from "../modal/new-file-modal";
+import FilterSlider from "../filter-slider";
+import { useSearchParams } from "react-router-dom";
+import clsx from "clsx";
 
 const Navigation = ({user, folder}) => {
     const [newFolderModal, setNewFolderModal] = useState(false)
     const [newFileModal, setNewFileModal] = useState(false)
+    const [open, setOpen] = useState(false)
+    const onOpen = ()=> setOpen(true)
+    const onClose = () => setOpen(false)
 
+    const [searchParams] = useSearchParams()
+  const type = searchParams.get('type')
 
 
     return ( 
@@ -24,6 +32,10 @@ const Navigation = ({user, folder}) => {
         user={user}
         isOpen={newFileModal}
         onClose={()=> setNewFileModal(false)} />
+        <FilterSlider
+        onClose={onClose}
+        isOpen={open}
+        />
         <div className="">
             <div className="flex flex-1 items-center justify-between px-4">
                 <h4 className=" font-medium">Documents</h4>
@@ -39,9 +51,10 @@ const Navigation = ({user, folder}) => {
                     <Button 
                     type='button'
                     secondary
-                    onClick={()=>{}}
+                    onClick={onOpen}
+                    active={!!type}
                     >
-                        <Filter  size={15} className="text-gray-900" />
+                        <Filter  size={15}  className={clsx(type ? "text-gray-400" : "text-gray-900")} />
                     </Button>
                     </div>
                     <Button 

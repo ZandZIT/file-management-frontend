@@ -31,6 +31,66 @@ export function formatFileSize(fileSizeInBytes) {
   }
 }
 
+export const filter = [
+  {
+    id: "jpg",
+    name: "jpg",
+    src: "/image/file-format/png.png",
+  },
+  {
+    id: "png",
+    name: "Png",
+    src: "/image/file-format/png.png",
+  },
+  {
+    id: "jpeg",
+    name: "Jpeg",
+    src: "/image/file-format/png.png",
+  },
+  {
+    id: "pdf",
+    name: "Pdf",
+    src: "/image/file-format/pdf.png",
+  },
+  {
+    id: "txt",
+    name: "Txt",
+    src: "/image/file-format/txt.png",
+  },
+  {
+    id: "doc",
+    name: "Doc",
+    src: "/image/file-format/doc.png",
+  },
+  {
+    id: "docx",
+    name: "Docx",
+    src: "/image/file-format/doc.png",
+  },
+  {
+    id: "ppt",
+    name: "Ppt",
+    src: "/image/file-format/ppt.png",
+  },
+  {
+    id: "xlsx",
+    name: "Xlsx",
+    src: "/image/file-format/sheets.png",
+  },
+  {
+    id: "mp4",
+    name: "Mp4",
+    src: "/image/file-format/video.png",
+  },
+  {
+    id: "folder",
+    name: "Folder",
+    src: "/image/file-format/folder.png",
+  },
+];
+
+
+
 export const iconMap = [
   {
     type: "jpg",
@@ -46,6 +106,7 @@ export const iconMap = [
   },
   {
     type: "pdf",
+    name: "Pdf",
     src: "/image/file-format/pdf.png",
   },
   {

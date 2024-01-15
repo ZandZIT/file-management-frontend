@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Sidebar from "../../src/components/sidebar/sidebar";
 import Navigation from "../../src/components/ui/navigation";
 import { useCurrentUser } from "../../src/hooks/use-current-user";
@@ -6,31 +6,31 @@ import { useFolder } from "../../src/hooks/use-folder";
 import Path from "../../src/components/path";
 import EmptyState from "../../src/components/ui/empty-state";
 import { useCurrentState } from "../../src/hooks/use-current-state";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ContentList from "../../src/components/contents/content-list";
 import Title from "../../src/components/ui/title";
 import { useScrollTop } from "../../src/hooks/use-scroll";
 import clsx from "clsx";
 
-const DashboarPage = () => {
-    // let value = useLocation();
+const DashboarPage =() => {
 
-    // console.log(value)
     const {user} = useCurrentUser()
     const {state, onSet} = useCurrentState()
     const {folderId} = useParams()
-    const folders = useFolder(folderId, state, false, user?.userType === "ADMIN")
-    const {folder, childFolders, childFiles} = folders;
-
+    
+    const {folder, childFolders, childFiles} = useFolder(folderId, state, false, user?.userType === "ADMIN")
 
     const scrolled = useScrollTop()
-
     useEffect(()=>{
         if(folder && folderId){
             onSet(folder)
         }
     },[folderId, folder, onSet])
 
+    // if(user.uid) {
+    //    const expired = await getAllFilesByUser(user)
+    //    console.log(expired)
+    // }
 
     return ( 
         <Sidebar >
@@ -45,7 +45,7 @@ const DashboarPage = () => {
                     </div>
                     
                     <div className="mt-36">
-                    {(childFolders?.length > 0 || childFiles?.length > 0)  && <ContentList folders={childFolders} files={childFiles} />}
+                    {(childFolders?.length > 0 || childFiles?.length > 0 )  && <ContentList folders={childFolders} files={childFiles} />}
                     {childFolders?.length === 0 && childFiles?.length === 0 && <EmptyState user={user} folder={folder} /> }
                     </div>
                 </div>

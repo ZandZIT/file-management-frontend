@@ -8,6 +8,7 @@ import Loading from "./components/ui/loading"
 import UsersPage from "../pages/users/page"
 import StaredPage from "../pages/stared/page"
 import Unauthorized from "./components/ui/unauthorized"
+import ExpiredPage from "../pages/expired/page"
 
 const App = () => {
   const [user, loading] = useAuthState(auth); 
@@ -27,6 +28,8 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<DashboarPage />} />
                 <Route path="/stared" element={<StaredPage />} />
+                <Route path="/expired" element={<ExpiredPage />} />
+                <Route path=":type" element={<DashboarPage />} />
                 <Route path="/folders/:folderId" element={<DashboarPage />} />
                 <Route path="/users" element={<UsersPage />} /> 
                 <Route path="/404" element={<Unauthorized />} /> 

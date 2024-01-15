@@ -5,14 +5,16 @@ import ContentActions from "./content-actions";
 import { formatFileSize, iconMap } from "../../utils";
 
 
-const FileBox = ({file}) => {
-  const fileFormat = iconMap.find(icon => icon.type === file?.name?.split('.')[1])
 
+const ExpiredFileBox = ({file}) => {
+  const fileFormat = iconMap.find(icon => icon.type === file.name.split('.')[1])
+
+  
   return (
     <div className="group border-b py-2 px-4 cursor-pointer transition-all hover:bg-neutral-200/50">
         <div className="flex items-center justify-between gap-y-2 gap-x-6">
             <Link 
-            className="flex-1 w-full grid grid-cols-4 items-center  gap-x-4"
+            className="flex-1 w-full grid grid-cols-3 items-center  gap-x-4"
             to={file.downloadURL}
             type={'button'}
             target="_blank"
@@ -24,11 +26,8 @@ const FileBox = ({file}) => {
                     </div>
                     <div className="text-[10px] ml-7 text-neutral-500">{formatFileSize(file?.size)}</div>
                 </div>
-                <div className="">
-                    <img src={file?.image ? file?.image : "/user-placeholder.png"} className="h-8 w-8 rounded-full hover:opacity-70 hover:border hover:shadow-sm shrink-0 object-cover object-center transition" />
-                </div>
                 <div className="text-xs text-neutral-500 ">
-                    {file.createdAt && format((file.createdAt)?.toDate(), "PP")}
+                    {file.expiredAt && format((file.expiredAt)?.toDate(), "PP")}
                 </div>
                 
             </Link>
@@ -37,8 +36,8 @@ const FileBox = ({file}) => {
     </div>)
 };
 
-FileBox.propTypes = {
+ExpiredFileBox.propTypes = {
   file: PropTypes.object,
 };
 
-export default FileBox;
+export default ExpiredFileBox;

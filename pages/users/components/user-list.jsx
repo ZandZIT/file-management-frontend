@@ -10,11 +10,7 @@ const UsersList = ({
         <div className='px-6'>
             <div className="
             mt-10
-            grid
-            grid-cols-2
-            sm:grid-cols-3
-            md:grid-cols-5
-            lg:grid-cols-7
+            flex flex-col
             ">
                 {users.map((doc) => (
                     <UserBox key={doc.id}

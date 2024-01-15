@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
 import clsx from 'clsx'
-import {  Download, MoreVertical, PencilLine, Star, Trash } from 'lucide-react'
+import {  Download, Eye, MoreVertical, PencilLine, Star, Trash } from 'lucide-react'
 import { Fragment, useState, } from 'react'
 import PropTypes from 'prop-types'
 import UpdateNameModal from '../modal/update-name-modal'
@@ -9,12 +9,14 @@ import toast from 'react-hot-toast'
 import { getTotalFilesByUser } from '../../../actions/get-total-files'
 import { getDeleteDocById } from '../../../actions/get-delete-doc'
 import { getRenameDocById } from '../../../actions/get-rename-doc'
+import FilePreviewModal from '../modal/file-preview-modal'
 
   
 
 export default function ContentActions({current}) {
   const [renameModal, setRenameModal] = useState(false)
   const [alertModal, setAlertModal] = useState(false)
+  const [previewModal, setPreviewModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const links = [
@@ -71,6 +73,12 @@ export default function ContentActions({current}) {
     isOpen={renameModal}
     onClose={()=> setRenameModal(false)}
     />
+    <FilePreviewModal
+    fileUrl={current.downloadURL}
+    isOpen={previewModal}
+    type={current.type}
+    onClose={()=> setPreviewModal(false)}
+    />
     <AlertModal
     disabled={isLoading}
     isOpen={alertModal}
@@ -79,6 +87,9 @@ export default function ContentActions({current}) {
     />
     <div className="absolute right-8 ">
       <div className="flex items-center gap-x-1">
+          <button  type="button" onClick={()=> setPreviewModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
+              {<Eye className="h-4 w-4" />}
+          </button> 
           <button onClick={()=>handleStar(current)}  className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {current.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
           </button>

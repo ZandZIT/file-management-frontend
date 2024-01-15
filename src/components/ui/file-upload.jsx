@@ -52,7 +52,7 @@ const FileUpload = ({
                 folderId: currentFolder?.id,
                 userId: user.uid,
                 size: file.size,
-                type: file.type,
+                type: file.name.split('.')[1],
             })
         
             const fileRef = ref(storage, `/files/${user.uid}/${filePath}`)
