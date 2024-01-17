@@ -1,14 +1,15 @@
-import { Route, Routes } from "react-router-dom"
 import DashboarPage from "../pages/dashboard/page"
 import AuthPage from '../pages/auth/page'
 import ToastProvider from "./components/providers/toast-provider"
-import { auth } from "../firebase"
-import { useAuthState } from 'react-firebase-hooks/auth';
 import Loading from "./components/ui/loading"
 import UsersPage from "../pages/users/page"
 import StaredPage from "../pages/stared/page"
 import Unauthorized from "./components/ui/unauthorized"
 import ExpiredPage from "../pages/expired/page"
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { Route, Routes } from "react-router-dom"
+import { auth } from "../firebase"
 
 const App = () => {
   const [user, loading] = useAuthState(auth); 

@@ -16,17 +16,6 @@ const AuthForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
 
-//   const session = useSession()
-//   const router = useRouter()
-
-
-//   useEffect(()=>{
-//      if(session?.status === 'authenticated') router.push('/users')
-//   },[session?.status, router]
-// )
-
-
-
   const {
     register,
     handleSubmit,
@@ -86,11 +75,12 @@ const AuthForm = () => {
             type='password' 
             register={register} 
             errors={errors} />
-            <Button 
-            type="submit"
-            fullWidth>
-              Sign in 
-            </Button>
+            <div className='flex items-center justify-end'>
+              <Button 
+              type="submit">
+                Sign in 
+              </Button>
+            </div>
           </form>
       </div>
     </div>

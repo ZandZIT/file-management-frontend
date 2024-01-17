@@ -11,6 +11,7 @@ import ContentList from "../../src/components/contents/content-list";
 import Title from "../../src/components/ui/title";
 import { useScrollTop } from "../../src/hooks/use-scroll";
 import clsx from "clsx";
+import Loading from "../../src/components/ui/loading";
 
 const DashboarPage =() => {
 
@@ -21,6 +22,8 @@ const DashboarPage =() => {
     const {folder, childFolders, childFiles} = useFolder(folderId, state, false, user?.userType === "ADMIN")
 
     const scrolled = useScrollTop()
+
+   
     useEffect(()=>{
         if(folder && folderId){
             onSet(folder)
@@ -33,6 +36,7 @@ const DashboarPage =() => {
     //    const expired = await getAllFilesByUser(user)
     //    console.log(expired)
     // }
+    if(!user.userType) return <Loading large />
 
     return ( 
         <Sidebar >
@@ -41,14 +45,14 @@ const DashboarPage =() => {
                     
                     <div className={clsx(" gap-y-4 flex flex-col justify-center fixed top-0 right-0 left-12 z-50 p-3 bg-white border-b",
                         scrolled && 'border-b shadow-sm')}>
-                        <Navigation user={user} folder={folder}/>
+                        <Navigation folder={folder}/>
                         <Path  folder={folder}/>
                         <Title />
                     </div>
                     
                     <div className="mt-36">
-                    {(childFolders?.length > 0 || childFiles?.length > 0 )  && <ContentList folders={childFolders} files={childFiles} />}
-                    {childFolders?.length === 0 && childFiles?.length === 0 && <EmptyState user={user} folder={folder} /> }
+                        {(childFolders?.length > 0 || childFiles?.length > 0 )  && <ContentList folders={childFolders} files={childFiles} />}
+                        {childFolders?.length === 0 && childFiles?.length === 0 && <EmptyState folder={folder} /> }
                     </div>
                 </div>
             </div>

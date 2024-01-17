@@ -9,27 +9,25 @@ import FilterSlider from "../filter-slider";
 import { useSearchParams } from "react-router-dom";
 import clsx from "clsx";
 
-const Navigation = ({user, folder}) => {
+const Navigation = ({folder}) => {
     const [newFolderModal, setNewFolderModal] = useState(false)
     const [newFileModal, setNewFileModal] = useState(false)
+    
     const [open, setOpen] = useState(false)
     const onOpen = ()=> setOpen(true)
     const onClose = () => setOpen(false)
 
     const [searchParams] = useSearchParams()
-  const type = searchParams.get('type')
-
+    const type = searchParams.get('type')
 
     return ( 
         <>
         <NewFolderModal
         currentFolder={folder}
-        user={user}
         isOpen={newFolderModal}
         onClose={()=> setNewFolderModal(false)} />
         <NewFileModal
         currentFolder={folder}
-        user={user}
         isOpen={newFileModal}
         onClose={()=> setNewFileModal(false)} />
         <FilterSlider
@@ -54,7 +52,7 @@ const Navigation = ({user, folder}) => {
                     onClick={onOpen}
                     active={!!type}
                     >
-                        <Filter  size={15}  className={clsx(type ? "text-gray-400" : "text-gray-900")} />
+                        <Filter  size={15}  className={clsx(type ? "text-gray-400 " : "text-gray-900")} />
                     </Button>
                     </div>
                     <Button 
@@ -85,7 +83,6 @@ const Navigation = ({user, folder}) => {
 }
  
 Navigation.propTypes = {
-    user: PropTypes.object,
     folder: PropTypes.object
 }
 export default Navigation;

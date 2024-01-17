@@ -6,17 +6,17 @@ import { collections, db, storage } from '../../../firebase'
 import { addDoc,  doc,  serverTimestamp, updateDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import toast from 'react-hot-toast'
+import { useCurrentUser } from '../../hooks/use-current-user'
 
 const FileUpload = ({
     expiredDate,
     currentFolder,
-    user,
     setCount,
     setState,
     onClose,
     setIsLoading
 })=>{
-
+    const {user} = useCurrentUser()
     const maxSize = 20971520
     const handleDrop = (files) =>{
         if(!files.length) return 
@@ -122,7 +122,6 @@ const FileUpload = ({
 FileUpload.propTypes = {
     expiredDate: PropTypes.object,
     currentFolder: PropTypes.object,
-    user: PropTypes.object,
     setCount: PropTypes.func,
     setIsLoading: PropTypes.func,
     setState: PropTypes.func,

@@ -11,7 +11,6 @@ const Title = () => {
             <h4>
             Created at
             </h4>
-            
         </div>
      );
 }

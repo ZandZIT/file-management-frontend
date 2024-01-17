@@ -35,9 +35,9 @@ const StaredPage = () => {
                         <h4 className="text-lg">Stared</h4>
                     </div>
                     <div className="mt-10">
-                        <Path  folder={folder}/>
+                        {/* <Path  folder={folder}/> */}
                         {(childFolders?.length > 0 || childFiles?.length > 0)  && <ContentList folders={childFolders} files={childFiles} />}
-                        {childFolders?.length === 0 && childFiles?.length === 0 && <EmptyState user={user} folder={folder} /> }
+                        {childFolders?.length === 0 && childFiles?.length === 0 && <div className="text-center text-xs text-gray-500">There is no items saved</div> }
                     </div>
                 </div>
             </div>

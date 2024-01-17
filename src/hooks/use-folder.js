@@ -88,7 +88,7 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
         if (showStared) {
           q = query(
             collections.folders,
-            where("parentId", "==", folderId),
+            // where("parentId", "==", folderId),
             where("userId", "==", curerntUser.uid),
             where("star", "==", showStared),
             orderBy("createdAt")
@@ -154,7 +154,6 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
         if (showStared) {
           q = query(
             collections.files,
-            where("folderId", "==", folderId),
             where("userId", "==", curerntUser.uid),
             where("star", "==", showStared),
             orderBy("createdAt")

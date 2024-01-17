@@ -33,7 +33,7 @@ const UsersPage = () => {
                     <div className="border-b py-4 px-6">
                         <h4 className="text-lg">All Users</h4>
                     </div>
-                    <div className="mt-10">
+                    <div className="">
                         <UsersList users={value?.docs} />
                     </div>
                 </div>

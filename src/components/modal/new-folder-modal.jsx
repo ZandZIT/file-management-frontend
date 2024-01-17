@@ -11,13 +11,15 @@ import { collections } from '../../../firebase';
 import { addDoc, serverTimestamp } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 import { ROOT_FOLDER } from '../../hooks/use-folder';
+import { useCurrentUser } from '../../hooks/use-current-user';
 
 const NewFolderModal = ({
     currentFolder,
-    user,
     isOpen,
     onClose
 }) => {
+    const {user} = useCurrentUser()
+
     const [isLoading, setIsLoading] = useState(false)
     const {register, handleSubmit, reset, formState:{errors}} = useForm({
         defaultValues:{
@@ -120,7 +122,6 @@ const NewFolderModal = ({
 
 NewFolderModal.propTypes = {
     currentFolder: PropTypes.object,
-    user: PropTypes.object,
     isOpen: PropTypes.bool,
     onClose: PropTypes.func
 }

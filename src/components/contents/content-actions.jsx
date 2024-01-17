@@ -28,9 +28,9 @@ export default function ContentActions({current}) {
 
 
   const links = [
-    { action: () => setRenameModal(true), label: 'Rename', icon: PencilLine },
     { action: (current) => handleStar(current), label: 'Star', icon: Star },
-    { action: ()=>{}, label: 'Download', icon: Download },
+    { action: () => setRenameModal(true), label: 'Rename', icon: PencilLine },
+    // { action: ()=>{}, label: 'Download', icon: Download },
     // { action: ()=>{}, label: 'Share', icon: Share },
     { action: ()=> setAlertModal(true), label: 'Delete', icon: Trash },
   ]
@@ -39,7 +39,6 @@ export default function ContentActions({current}) {
   const handleStar = async(data) => {
     if(data?.type){
       await getRenameDocById("files", data);
-    
     }else{
       await getRenameDocById("folders", data);
     }

@@ -9,7 +9,6 @@ const UsersList = ({
     return ( 
         <div className='px-6'>
             <div className="
-            mt-10
             flex flex-col
             ">
                 {users.map((doc) => (

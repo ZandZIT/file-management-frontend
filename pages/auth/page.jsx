@@ -8,7 +8,8 @@ export default function AuthPage() {
       flex 
       flex-col
       items-center 
-      justify-center">
+      justify-center
+      gap-y-2">
         <div 
         className="
         sm:max-w-md 
@@ -16,12 +17,12 @@ export default function AuthPage() {
         mx-auto
         space-y-4
         ">
-        <img 
-        src={'/logo.png'}
-        alt=""
-        className="mx-auto h-[100px] w-[100px]"
-        />
-        <h1 className="text-3xl font-semibold text-center">Sign in to your account</h1>
+          <img 
+          src={'/logo.png'}
+          alt=""
+          className="mx-auto h-[100px] w-[100px]"
+          />
+          <h1 className="text-3xl font-bold text-center">Sign in to your account</h1>
         </div>
         <AuthForm />
     </div>
