@@ -23,7 +23,7 @@ const DashboarPage =() => {
 
     const scrolled = useScrollTop()
 
-   
+   console.log(childFiles)
     useEffect(()=>{
         if(folder && folderId){
             onSet(folder)
@@ -36,7 +36,7 @@ const DashboarPage =() => {
     //    const expired = await getAllFilesByUser(user)
     //    console.log(expired)
     // }
-    if(!user.userType) return <Loading large />
+    if(!user.userType) return <Loading large={"large"} />
 
     return ( 
         <Sidebar >

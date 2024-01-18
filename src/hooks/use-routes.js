@@ -1,12 +1,15 @@
 import { signOut } from "firebase/auth";
-import { BellDot, File, LogOut, Star, UsersRound } from "lucide-react";
+import { Bell, File, LogOut, Star, UsersRound } from "lucide-react";
 import { useMemo } from "react";
 import { auth } from "../../firebase";
+import { useExpiredFiles } from "./use-expired-files";
 
 
 export const useRoutes = () => {
   const pathname = window.location.pathname;
+  const {childFiles} = useExpiredFiles()
 
+  // console.log(childFiles)
   const logout = () => {
     signOut(auth);
     
@@ -38,19 +41,20 @@ export const useRoutes = () => {
       {
         label: "Notification",
         href: "/expired",
-        icon: BellDot,
+        icon: Bell,
+        count: childFiles.length,
         active: pathname === "/expired",
         allAccess: true,
       },
       {
         label: "Logout",
-        href: "#",
+        href: "/",
         onClick: () => logout(),
         icon: LogOut,
         allAccess: true,
       },
     ],
-    [pathname]
+    [pathname, childFiles]
   );
 
   return routes;

@@ -1,4 +1,6 @@
 import bcrypt from 'bcryptjs'
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 export const types = [
   {
@@ -143,3 +145,28 @@ export const iconMap = [
     src: "/image/file-format/video.png",
   },
 ];
+
+export const getDataWithUserDetail = async (snapshot) => {
+  const data = [];
+  const userPromises = [];
+  snapshot.forEach((document) => {
+    const userId = document.data().userId;
+    const userDocRef = doc(db, "users", userId);
+    const userPromise = getDoc(userDocRef).then((userDoc) => {
+      return userDoc.exists() ? userDoc.data() : null;
+    });
+    userPromises.push(userPromise);
+    data.push({ ...document.data(), id: document.id });
+  });
+  // Wait for all userPromises to be resolved
+  const userDetailsArray = await Promise.all(userPromises);
+  // Merge user details into data
+  data.forEach((item, index) => {
+    const userDetails = userDetailsArray[index];
+    if (userDetails) {
+      Object.assign(item, userDetails);
+    }
+  });
+
+  return data;
+};

@@ -58,6 +58,7 @@ const DesktopSidebar = ({
                         item?.allAccess) && (
                             <SidebarItem 
                               key={item.label}
+                              count={item.count}
                               label={item.label}
                               active={item?.active}
                               href={item.href}

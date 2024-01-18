@@ -1,29 +1,12 @@
 import Sidebar from "../../src/components/sidebar/sidebar";
-import { useCurrentUser } from "../../src/hooks/use-current-user";
-import { useEffect, useState } from "react";
-import { getAllFilesByUser } from "../../actions/get-all-files";
+
 import ExpiredFileBox from "../../src/components/contents/expired-file-box";
+import { useExpiredFiles } from "../../src/hooks/use-expired-files";
 
 const ExpiredPage = () => {
 
-    const {user} = useCurrentUser()
-    const [childFiles, setChildFiles] = useState([]);
-
-    useEffect(() => {
-        // Pass a callback to receive the updated data
-        const unsubscribe = getAllFilesByUser(user, (updatedData) => {
-          setChildFiles(updatedData)
-        });
-
-        if(user?.uid){
-            return () => {
-            // Unsubscribe when the component unmounts
-            unsubscribe();}; 
-        }
-
-      }, [user]);
+    const {childFiles} = useExpiredFiles();
     
-
     return ( 
         <Sidebar >
             <div className="space-y-4 h-full">

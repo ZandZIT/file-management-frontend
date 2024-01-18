@@ -27,7 +27,7 @@ const ExpiredFileBox = ({file}) => {
                     <div className="text-[10px] ml-7 text-neutral-500">{formatFileSize(file?.size)}</div>
                 </div>
                 <div className="text-xs text-neutral-500 ">
-                    {file.expiredAt && format((file.expiredAt)?.toDate(), "PP")}
+                    {file?.expiredAt && format((file?.expiredAt)?.toDate(), "PP")}
                 </div>
                 
             </Link>

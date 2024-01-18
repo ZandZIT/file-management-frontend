@@ -1,31 +1,31 @@
-import { useParams } from "react-router-dom";
 import Sidebar from "../../src/components/sidebar/sidebar";
 import { useCurrentUser } from "../../src/hooks/use-current-user";
-import { useFolder } from "../../src/hooks/use-folder";
-import Path from "../../src/components/path";
-import EmptyState from "../../src/components/ui/empty-state";
-import { useCurrentState } from "../../src/hooks/use-current-state";
-import { useEffect } from "react";
+
 import ContentList from "../../src/components/contents/content-list";
+import Loading from "../../src/components/ui/loading";
+import { useStaredFiles } from "../../src/hooks/use-stared-files";
 
 const StaredPage = () => {
-    // let value = useLocation();
-
-    // console.log(value)
-
-    const {state, onSet} = useCurrentState()
-    const {folderId} = useParams()
-    const folders = useFolder(folderId, state, true)
-    const {folder, childFolders, childFiles} = folders;
 
     const {user} = useCurrentUser()
 
-    useEffect(()=>{
-        if(folder && folderId){
-            onSet(folder)
-        }
-    },[folderId, folder, onSet])
+    // const {state, onSet} = useCurrentState()
+    // const {folderId} = useParams()
+    // const folders = useFolder(folderId, state, true)
+    // const {folder, childFolders, childFiles} = folders;
 
+    // console.log(childFiles, childFolders)
+
+    // useEffect(()=>{
+    //     if(folder && folderId){
+    //         onSet(folder)
+    //     }
+    // },[folderId, folder, onSet])
+
+    const {files: childFiles, folders: childFolders} = useStaredFiles()
+    console.log(childFiles)
+
+    if(!user) return <Loading />
 
     return ( 
         <Sidebar >

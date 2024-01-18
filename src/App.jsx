@@ -10,6 +10,7 @@ import ExpiredPage from "../pages/expired/page"
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Route, Routes } from "react-router-dom"
 import { auth } from "../firebase"
+import Sidebar from "./components/sidebar/sidebar"
 
 const App = () => {
   const [user, loading] = useAuthState(auth); 

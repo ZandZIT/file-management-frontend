@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
 import clsx from 'clsx'
-import {  Download, Eye, MoreVertical, PencilLine, Star, Trash } from 'lucide-react'
+import {  Eye, MoreVertical, PencilLine, Star, Trash } from 'lucide-react'
 import { Fragment, useState, } from 'react'
 import PropTypes from 'prop-types'
 import UpdateNameModal from '../modal/update-name-modal'
@@ -12,7 +12,6 @@ import { getRenameDocById } from '../../../actions/get-rename-doc'
 import FilePreviewModal from '../modal/file-preview-modal'
 import { useCurrentState } from '../../hooks/use-current-state'
 import { ROOT_FOLDER } from '../../hooks/use-folder'
-import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCurrentUser } from '../../hooks/use-current-user'
 
   

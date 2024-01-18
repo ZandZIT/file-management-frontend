@@ -16,7 +16,7 @@ const NewFileModal = ({
     const [isLoading, setIsLoading] = useState(false)
     const [count, setCount] = useState(0)
     const [state, setState] = useState(1);
-    const [startDate, setStartDate] = useState(new Date())
+    const [startDate, setStartDate] = useState(null)
 
   return (
     <Modal 
