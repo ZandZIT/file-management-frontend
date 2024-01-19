@@ -5,13 +5,24 @@ import { collections } from "../firebase";
 export const getExpiredFilesByUser = async(user) => {
 
   // return user
-  const q = query(
-    collections.files,
-    where("userId", "==", user.uid),
-    where("expiredAt", "!=", null),
-    orderBy("expiredAt"), // First sort order on "expiredAt"
-    orderBy("createdAt") // Second sort order on "createdAt" if needed
-  );
+  let q;
+  if(user.userType === "ADMIN"){
+    q = query(
+      collections.files,
+      where("expiredAt", "!=", null),
+      orderBy("expiredAt"), // First sort order on "expiredAt"
+      orderBy("createdAt") // Second sort order on "createdAt" if needed
+    );
+  }
+  else{
+    q = query(
+      collections.files,
+      where("userId", "==", user.uid),
+      where("expiredAt", "!=", null),
+      orderBy("expiredAt"), // First sort order on "expiredAt"
+      orderBy("createdAt") // Second sort order on "createdAt" if needed
+    );
+  }
   try {
     const querySnapshot = await getDocs(q);
 

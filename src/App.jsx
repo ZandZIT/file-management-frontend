@@ -31,7 +31,7 @@ const App = () => {
                 <Route path=":type" element={<DashboarPage />} />
                 <Route path="/folders/:folderId" element={<DashboarPage />} />
                 <Route path="/users" element={<UsersPage />} /> 
-                <Route path="/404" element={<Unauthorized />} /> 
+                <Route path="/unauthorized" element={<Unauthorized />} /> 
             </Routes>
           </>
       }

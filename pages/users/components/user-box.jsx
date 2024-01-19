@@ -20,9 +20,11 @@ const UserBox = ({
     // how to import env variable in VITE
     const baseURL = import.meta.env.VITE_REACT_SERVER_URL
     const onDelete = async()=>{
+        console.log(user)
+        if(!user.uid) return;
         try{
             setIsLoading(true)
-            await axios.delete(`${baseURL}/users/${user.uid}`).then(()=>{
+            await axios.delete(`${baseURL}/users/${user?.uid}`).then(()=>{
                 toast.success("User deleted")
         })}catch(error){
             console.log(error)
@@ -39,8 +41,8 @@ const UserBox = ({
         isOpen={settingsModal}
         onClose={()=> setSettingsModal(false)} />
         <AlertModal
-        title={"Delete"}
-        description={"Are you sure?"}
+        title={"Delete User"}
+        description={"This action can't be undone!"}
         disabled={isLoading}
         isOpen={alertModal}
         onAction={onDelete}

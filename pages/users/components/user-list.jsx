@@ -5,7 +5,6 @@ import UserBox from './user-box';
 const UsersList = ({
     users
 }) => {
-    
     return ( 
         <div className='px-6'>
             <div className="
@@ -13,7 +12,7 @@ const UsersList = ({
             ">
                 {users.map((doc) => (
                     <UserBox key={doc.id}
-                    user={doc.data()} />
+                    user={{...doc.data(), uid: doc.id  }} />
                 ))}
             </div>
             

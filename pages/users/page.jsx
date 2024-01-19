@@ -6,22 +6,26 @@ import { collection } from "firebase/firestore";
 import { useCurrentUser } from "../../src/hooks/use-current-user";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Loading from "../../src/components/ui/loading";
 
 const UsersPage = () => {
-    const user = useCurrentUser()
+    const {user, loading} = useCurrentUser()
+
     const navigate = useNavigate()
-    
-    const [value, loading ] = useCollection(
+
+    const [value ] = useCollection(
         collection(db, 'users'),
         {
           snapshotListenOptions: { includeMetadataChanges: true },
         }
     );
 
-   
-    if(user?.userType === "ADMIN") return navigate('/404');
+    useEffect(()=>{
+        if(user.uid && user.userType !== "ADMIN") return navigate('/unauthorized');
+    },[ user, navigate])
     
 
+    if(loading) return <Loading large="large" />
     
     // if(loading){
     //     return <Loading />
