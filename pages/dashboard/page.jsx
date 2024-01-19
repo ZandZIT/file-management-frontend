@@ -14,7 +14,6 @@ import clsx from "clsx";
 import Loading from "../../src/components/ui/loading";
 
 const DashboarPage =() => {
-
     const {user} = useCurrentUser()
     const {state, onSet} = useCurrentState()
     const {folderId} = useParams()
@@ -23,7 +22,7 @@ const DashboarPage =() => {
 
     const scrolled = useScrollTop()
 
-   console.log(childFiles)
+
     useEffect(()=>{
         if(folder && folderId){
             onSet(folder)
@@ -36,14 +35,14 @@ const DashboarPage =() => {
     //    const expired = await getAllFilesByUser(user)
     //    console.log(expired)
     // }
-    if(!user.userType) return <Loading large={"large"} />
+    if(!user) return <Loading large={"large"} />
 
     return ( 
         <Sidebar >
             <div className="relative w-full space-y-4 h-full">
                 <div className="flex flex-col gap-4">
                     
-                    <div className={clsx(" gap-y-4 flex flex-col justify-center fixed top-0 right-0 left-12 z-50 p-3 bg-white border-b",
+                    <div className={clsx(" gap-y-4 flex flex-col justify-center fixed top-0 right-0 left-0 sm:left-12 z-50 p-3 bg-white border-b",
                         scrolled && 'border-b shadow-sm')}>
                         <Navigation folder={folder}/>
                         <Path  folder={folder}/>

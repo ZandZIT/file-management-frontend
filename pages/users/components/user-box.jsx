@@ -6,6 +6,9 @@ import clsx from 'clsx';
 
 import { PencilLine, Trash } from 'lucide-react';
 import AlertModal from '../../../src/components/modal/alert-modal';
+import axios from 'axios';
+
+import toast from 'react-hot-toast';
 
 const UserBox = ({
     user
@@ -13,7 +16,21 @@ const UserBox = ({
     const [settingsModal, setSettingsModal] = useState(false)
     const [alertModal, setAlertModal] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-  
+
+    // how to import env variable in VITE
+    const baseURL = import.meta.env.VITE_REACT_SERVER_URL
+    const onDelete = async()=>{
+        try{
+            setIsLoading(true)
+            await axios.delete(`${baseURL}/users/${user.uid}`).then(()=>{
+                toast.success("User deleted")
+        })}catch(error){
+            console.log(error)
+            toast.error("Something went wrong");
+        }finally{
+            setIsLoading(false)
+        }
+    }
     
     return ( 
         <>
@@ -22,8 +39,11 @@ const UserBox = ({
         isOpen={settingsModal}
         onClose={()=> setSettingsModal(false)} />
         <AlertModal
+        title={"Delete"}
+        description={"Are you sure?"}
         disabled={isLoading}
         isOpen={alertModal}
+        onAction={onDelete}
         onClose={()=> setAlertModal(false)}
         />
         <div className="group border-b py-2 px-4 cursor-pointer transition-all hover:bg-neutral-200/50">
@@ -47,9 +67,10 @@ const UserBox = ({
                         <button  type="button" onClick={()=> setSettingsModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
                             {<PencilLine className="h-4 w-4" />}
                         </button> 
+                        {user.userType !== "ADMIN" && 
                         <button onClick={()=> setAlertModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
                             {<Trash className="h-4 w-4 text-rose-500" />}
-                        </button>
+                        </button>}
                     </div>
                 </div>
             </div>        

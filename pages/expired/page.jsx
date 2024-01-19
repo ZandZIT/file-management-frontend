@@ -6,7 +6,6 @@ import { useExpiredFiles } from "../../src/hooks/use-expired-files";
 const ExpiredPage = () => {
 
     const {childFiles} = useExpiredFiles();
-    
     return ( 
         <Sidebar >
             <div className="space-y-4 h-full">

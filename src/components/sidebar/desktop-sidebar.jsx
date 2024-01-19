@@ -1,4 +1,4 @@
-import { UserPlus } from "lucide-react";
+import { LogOut, UserPlus } from "lucide-react";
 import { useRoutes } from "../../hooks/use-routes";
 import Logo from "../logo";
 import Avater from "../ui/avater";
@@ -8,6 +8,8 @@ import RegisterModal from "../modal/register-modal";
 import SettingsModal from "../modal/settings-modal";
 
 import PropTypes from 'prop-types'
+import AlertModal from "../modal/alert-modal";
+import { getAuth } from "firebase/auth";
 
 
 const DesktopSidebar = ({
@@ -15,9 +17,15 @@ const DesktopSidebar = ({
 }) => {
     const [registerModal, setRegisterModal] = useState(false)
     const [settingsModal, setSettingsModal] = useState(false)
+    const [alertModal, setAlertModal] = useState(false);
 
     const routes = useRoutes()
     
+    const onAction = ()=>{
+      if(getAuth().currentUser){
+          getAuth().signOut();
+      }
+    }
 
     return ( 
     <>
@@ -28,6 +36,13 @@ const DesktopSidebar = ({
       currentUser={currentUser}
       isOpen={settingsModal}
       onClose={()=> setSettingsModal(false)} />
+      <AlertModal
+        title={"Sign Out"}
+        description={"Are you sure?"}
+        onAction={onAction}
+        onClose={()=> setAlertModal(false)}
+        isOpen={alertModal}
+        />
         <div className="
           hidden
           sm:fixed
@@ -63,7 +78,6 @@ const DesktopSidebar = ({
                               active={item?.active}
                               href={item.href}
                               icon={item.icon}
-                              onClick={item.onClick}
                               />
                         )
                       })
@@ -76,6 +90,11 @@ const DesktopSidebar = ({
                       onClick={()=> setRegisterModal(true)}
                       />
                     }
+                    <SidebarItem    
+                      label={"Sign Out"}
+                      icon={LogOut}
+                      onClick={()=> setAlertModal(true)}
+                     />
                 </ul>
     
             </nav>

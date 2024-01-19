@@ -170,3 +170,22 @@ export const getDataWithUserDetail = async (snapshot) => {
 
   return data;
 };
+
+export const getIsAdmin = async (user) => {
+  if (!user) return;
+
+  const currentUserRef = doc(db, "users", user?.uid);
+  let isAdmin = false;
+  try {
+    const docSnapshot = await getDoc(currentUserRef);
+
+    if (docSnapshot.exists()) {
+      const data = docSnapshot.data();
+      isAdmin =  data.userType === "ADMIN";
+    } 
+    return isAdmin;
+  } catch (error) {
+    console.error("Error getting user document:", error);
+    throw error;
+  }
+};

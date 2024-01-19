@@ -8,6 +8,8 @@ import Button from '../ui/button';
 
 
 const AlertModal = ({
+    title,
+    description,
     disabled,
     isOpen,
     onClose,
@@ -29,12 +31,12 @@ const AlertModal = ({
                     text-gray-900
                     leading-7
                     '>
-                        Delete 
+                        {title}
                     </h2>
                     <p className='
                     text-sm text-gray-500 mt-1 leading-6
                     '>
-                        Are you sure?
+                        {description}
                     </p>
                 </div>
                 <div className='
@@ -72,6 +74,8 @@ const AlertModal = ({
 }
 
 AlertModal.propTypes = {
+    title: PropTypes.string,
+    description: PropTypes.string,
     disabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     onClose: PropTypes.func,

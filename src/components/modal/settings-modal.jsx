@@ -38,15 +38,15 @@ const SettingsModal = ({
         try{       
             setIsLoading(true);
             if(!data.image || data.image.startsWith('https://') ){
-                await updateDoc(doc(db, 'users', currentUser?.email),{
+                await updateDoc(doc(db, 'users', currentUser?.uid),{
                     username: data.username,
                     userType: data.type.value
                 })
             }else{
-                const imageRef = ref(storage, `users/${currentUser?.email}/profile`);
+                const imageRef = ref(storage, `users/${currentUser?.uid}/profile`);
                 await uploadString(imageRef, image, 'data_url').then( async (Spanshot) => {
                     const downloadURL = await getDownloadURL(imageRef)
-                    await updateDoc(doc(db, 'users', currentUser?.email),{
+                    await updateDoc(doc(db, 'users', currentUser?.uid),{
                         image: downloadURL,
                         username: data.username,
                         userType: data.type.value

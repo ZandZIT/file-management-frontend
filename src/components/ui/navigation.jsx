@@ -1,4 +1,4 @@
-import { FileUp, Filter, FolderPlus, Search } from "lucide-react";
+import { FileUp, FolderPlus } from "lucide-react";
 import Button from "./button";
 import NewFolderModal from "../modal/new-folder-modal";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import clsx from "clsx";
 const Navigation = ({folder}) => {
     const [newFolderModal, setNewFolderModal] = useState(false)
     const [newFileModal, setNewFileModal] = useState(false)
-    
+
     const [open, setOpen] = useState(false)
     const onOpen = ()=> setOpen(true)
     const onClose = () => setOpen(false)
@@ -20,6 +20,7 @@ const Navigation = ({folder}) => {
     const [searchParams] = useSearchParams()
     const type = searchParams.get('type')
 
+    
     return ( 
         <>
         <NewFolderModal
@@ -35,7 +36,7 @@ const Navigation = ({folder}) => {
         isOpen={open}
         />
         <div className="">
-            <div className="flex flex-1 items-center justify-between px-4">
+            <div className="flex flex-1 items-center justify-between sm:px-4">
                 <h4 className=" font-medium">Documents</h4>
                 <div className="flex items-center gap-x-4">
                     <div className="sm:flex items-center gap-x-4 hidden">
@@ -52,7 +53,7 @@ const Navigation = ({folder}) => {
                     onClick={onOpen}
                     active={!!type}
                     >
-                        <Filter  size={15}  className={clsx(type ? "text-gray-400 " : "text-gray-900")} />
+                        <img src="/image/file-format/filter.png"   className={clsx("h-4 w-4", type ? "text-gray-400 " : "text-gray-900")} />
                     </Button>
                     </div>
                     <Button 

@@ -25,14 +25,10 @@ export default function ContentActions({current}) {
   const {state} = useCurrentState()
   const {user} = useCurrentUser()
 
+  const isFile = current.type ? !!current.type : false;
 
-  const links = [
-    { action: (current) => handleStar(current), label: 'Star', icon: Star },
-    { action: () => setRenameModal(true), label: 'Rename', icon: PencilLine },
-    // { action: ()=>{}, label: 'Download', icon: Download },
-    // { action: ()=>{}, label: 'Share', icon: Share },
-    { action: ()=> setAlertModal(true), label: 'Delete', icon: Trash },
-  ]
+  const title = current.type ? "Delete File" : "Delete Folder";
+  const description = "This action can not be undone!"
 
 
   const handleStar = async(data) => {
@@ -53,7 +49,7 @@ export default function ContentActions({current}) {
                 : `${state.path.join("/")}/${state.name}/${current.name}`
 
         if(current?.type){
-          await getDeleteDocById("files", current.id, filePath, user).then((doc)=> {
+          await getDeleteDocById("files", current.id, filePath, user).then(()=> {
             toast.success("File deleted")
           });
         }else{
@@ -61,7 +57,7 @@ export default function ContentActions({current}) {
           if(totalNumberOfFiles > 0){
             return toast.error("Delete all the files within the folder")
           }
-          await getDeleteDocById("folders", current.id).then((doc)=> {
+          await getDeleteDocById("folders", current.id).then(()=> {
             toast.success("Folder deleted")
           });
         }
@@ -90,6 +86,8 @@ export default function ContentActions({current}) {
     onClose={()=> setPreviewModal(false)}
     />}
     <AlertModal
+    title={title}
+    description={description}
     disabled={isLoading}
     isOpen={alertModal}
     onAction={onDelete}
@@ -133,26 +131,50 @@ export default function ContentActions({current}) {
           >
             <Menu.Items className="z-30 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
               <div className="px-1 py-1 ">
-              {links.map(({icon: Icon, action, label }) => (
-              <Menu.Item
-                  as="a"
-                  key={label}
-                  className=""
-              >
-                  <button
-                      onClick={() =>action(current)}
-                      className={clsx("group font-medium flex w-full items-center rounded-md px-2 py-2 text-xs bg-transparent hover:bg-neutral-200/50 transition",
-                      label === "Delete" ? "text-rose-500" : "text-gray-900 ")}
+              
+                  {!isFile &&
+                  <Menu.Item as="a" key={"Rename"}>
+                      <button
+                      onClick={() => setRenameModal(true)}
+                      className={clsx("group font-medium flex w-full items-center rounded-md px-2 py-2 text-xs bg-transparent hover:bg-neutral-200/50 transitio text-gray-900 ")}
                     >
-                      <Icon
-                      className={clsx("mr-2 h-4 w-4 ",
-                      label === "Delete" ? "text-rose-500" : "text-gray-700 " )}
-                      />
-                      
-                      {label}
+                      <PencilLine
+                      className={clsx("mr-2 h-4 w-4 text-gray-700 " )}/>
+                      Rename
                     </button>
-              </Menu.Item>
-          ))}
+                  </Menu.Item>}
+                  {isFile && 
+                  <Menu.Item as="a" key={"Preview"}>
+                      <button
+                      onClick={() => setPreviewModal(true)}
+                      className={clsx("group font-medium flex w-full items-center rounded-md px-2 py-2 text-xs bg-transparent hover:bg-neutral-200/50 transitio text-gray-900 ")}
+                    >
+                      <Eye
+                      className={clsx("mr-2 h-4 w-4 text-gray-700 " )}/>
+                      Preview
+                    </button>
+                  </Menu.Item>}
+                  <Menu.Item as="a" key={"Star"}>
+                      <button
+                      onClick={() => handleStar(current)}
+                      className={clsx("group font-medium flex w-full items-center rounded-md px-2 py-2 text-xs bg-transparent hover:bg-neutral-200/50 transitio text-gray-900 ")}
+                    >
+                      <Star
+                      className={clsx("mr-2 h-4 w-4 text-gray-700 " )}/>
+                      Star
+                    </button>
+                  </Menu.Item>
+                  <Menu.Item as="a" key={"Delete"}>
+                      <button
+                      onClick={() => setAlertModal(true)}
+                      className={clsx("group font-medium flex w-full items-center rounded-md px-2 py-2 text-xs bg-transparent hover:bg-neutral-200/50 transitio text-rose-500 ")}
+                    >
+                      <Trash
+                      className={clsx("mr-2 h-4 w-4 text-rose-500 " )}/>
+                      Delete
+                    </button>
+                  </Menu.Item>
+              
               </div>
             </Menu.Items>
           </Transition>

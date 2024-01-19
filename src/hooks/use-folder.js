@@ -1,8 +1,7 @@
 import { useEffect, useReducer } from "react";
-import { auth, collections, db } from "../../firebase";
+import { collections, db } from "../../firebase";
 import { doc, getDoc, onSnapshot, orderBy, query, where } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { getDataWithUserDetail } from "../utils";
+import { getAuth } from "firebase/auth";
 
 const ACTIONS = {
   SELECT_FOLDER: "select-folder",
@@ -46,8 +45,8 @@ function reducer(state, { type, payload}){
 }
 
 export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
-  const [user] = useAuthState(auth);
-  const curerntUser = user.providerData[0];
+  // const [user] = useAuthState(auth);
+  const curerntUser = getAuth().currentUser;
   const [state, dispatch] = useReducer(reducer, {
     folderId,
     folder,
@@ -112,7 +111,6 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
         // Execute the query
         onSnapshot(q, async (snapshot) => {
           const data = await getDataWithUserDetail(snapshot)
-
           dispatch({
             type: ACTIONS.SET_CHILD_FOLDERS,
             payload: { childFolders: data },
@@ -156,7 +154,6 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
         // Execute the query
         onSnapshot(q, async (snapshot) => {
           const data = await getDataWithUserDetail(snapshot)
-
           dispatch({
             type: ACTIONS.SET_CHILD_FILES,
             payload: { childFiles: data },
@@ -169,8 +166,32 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
 
     if (curerntUser?.uid) setChildFiles();
   }, [folderId, curerntUser, showStared, isAdmin]);
+  
 
+  const getDataWithUserDetail = async (snapshot) => {
+    const data = [];
+    const userPromises = [];
+    snapshot.forEach((document) => {
+      const userId = document.data().userId;
+      const userDocRef = doc(db, "users", userId);
+      const userPromise = getDoc(userDocRef).then((userDoc) => {
+        return userDoc.exists() ? userDoc.data() : null;
+      });
+      userPromises.push(userPromise);
+      data.push({ ...document.data(), id: document.id });
+    });
+    // Wait for all userPromises to be resolved
+    const userDetailsArray = await Promise.all(userPromises);
+    // Merge user details into data
+    data.forEach((item, index) => {
+      const userDetails = userDetailsArray[index];
+      if (userDetails) {
+        Object.assign(item, userDetails);
+      }
+    });
 
+    return data;
+  };
 
   return state;
 }

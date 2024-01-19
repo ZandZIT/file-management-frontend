@@ -12,7 +12,7 @@ const FileBox = ({file}) => {
     <div className="group border-b py-2 px-4 cursor-pointer transition-all hover:bg-neutral-200/50">
         <div className="flex items-center justify-between gap-y-2 gap-x-6">
             <Link 
-            className="flex-1 w-full grid grid-cols-4 items-center  gap-x-4"
+            className="flex-1 w-full grid grid-cols-3 items-center  gap-x-4"
             to={file.downloadURL}
             type={'button'}
             target="_blank"

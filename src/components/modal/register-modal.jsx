@@ -7,12 +7,12 @@ import { useForm } from "react-hook-form"
 
 import Input from '../inputs/input';
 import Button from '../ui/button';
-import { auth, db } from '../../../firebase';
+import { db } from '../../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import Select from '../inputs/select';
 import {  types } from '../../utils';
 import toast from 'react-hot-toast';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import axios from 'axios';
 
 const RegisterModal = ({
     isOpen,
@@ -30,26 +30,28 @@ const RegisterModal = ({
     // const image = watch('image')
     // const imageref = useRef(null)
 
+    const baseURL = import.meta.env.VITE_REACT_SERVER_URL
+
     const userType = watch('type')
       const onSubmit = async(data)=>{
         try{
             setIsLoading(true)
             // Create a new user in Firebase Authentication
-            await createUserWithEmailAndPassword(auth, data.email, data.password);
-            // const user = userCredential.user;
+            await axios.post(`${baseURL}/auth/register`, {email: data.email, password: data.password})
+            .then(async(user)=>{
+                const userRef = doc(db, 'users', user.data.uid);
 
-            // Use the email as the document ID in the Firestore "users" collection
-            const userRef = doc(db, 'users', data.email);
-
-            // Create a new document with user details
-            await setDoc(userRef, {
-            email: data?.email,
-            username: data?.email?.split('@')[0],
-            userType: data?.type.value,
-            });
-            toast.success("User created")
-            reset()
-            onClose()            
+                // Create a new document with user details
+                await setDoc(userRef, {
+                email: data?.email,
+                username: data?.email?.split('@')[0],
+                userType: data?.type.value,
+                });
+                toast.success("User created")
+                reset()
+                onClose() 
+            })
+                       
         }catch (error) {
             console.error('Error creating user:', error);
             toast.error("Something went wrong");
