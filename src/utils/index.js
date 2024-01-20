@@ -146,6 +146,11 @@ export const iconMap = [
   },
 ];
 
+
+export const fileFormat = (file) => iconMap.find(
+    (icon) => icon.type === file.type);
+
+
 export const getDataWithUserDetail = async (snapshot) => {
   const data = [];
   const userPromises = [];

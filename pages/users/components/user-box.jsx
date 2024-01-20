@@ -9,6 +9,7 @@ import AlertModal from '../../../src/components/modal/alert-modal';
 import axios from 'axios';
 
 import toast from 'react-hot-toast';
+import { getDeleteUserById } from '../../../actions/get-delete-user';
 
 const UserBox = ({
     user
@@ -20,13 +21,15 @@ const UserBox = ({
     // how to import env variable in VITE
     const baseURL = import.meta.env.VITE_REACT_SERVER_URL
     const onDelete = async()=>{
-        console.log(user)
         if(!user.uid) return;
         try{
             setIsLoading(true)
-            await axios.delete(`${baseURL}/users/${user?.uid}`).then(()=>{
-                toast.success("User deleted")
-        })}catch(error){
+            await axios.delete(`${baseURL}/users/${user?.uid}`).then(async()=>{
+                await getDeleteUserById(user?.uid).then(()=>{
+                    toast.success("User deleted")
+                })
+            })
+        }catch(error){
             console.log(error)
             toast.error("Something went wrong");
         }finally{

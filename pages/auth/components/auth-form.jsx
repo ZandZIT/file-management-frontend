@@ -32,8 +32,11 @@ const AuthForm = () => {
   const onSubmit = async(data) => {
     try{
       setIsLoading(true)
-      await signInWithEmailAndPassword(auth, data.email,data. password);
-      navigate('/')
+      await signInWithEmailAndPassword(auth, data.email,data. password).then(()=>{
+        navigate('/')
+      }).catch(()=>{
+        toast.error("Invalid credential!")
+    })
     }catch(error){
       console.log(error)
       toast.error("Somethong went wrong")

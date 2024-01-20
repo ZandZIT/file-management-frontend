@@ -1,4 +1,4 @@
-import { FileUp, FolderPlus } from "lucide-react";
+import { FileUp, Filter, FolderPlus } from "lucide-react";
 import Button from "./button";
 import NewFolderModal from "../modal/new-folder-modal";
 import { useState } from "react";
@@ -7,7 +7,8 @@ import PropTypes from 'prop-types'
 import NewFileModal from "../modal/new-file-modal";
 import FilterSlider from "../filter-slider";
 import { useSearchParams } from "react-router-dom";
-import clsx from "clsx";
+import { useReminderFiles } from "../../hooks/use-reminder-files";
+import NotificationPopup from "../notification-popup";
 
 const Navigation = ({folder}) => {
     const [newFolderModal, setNewFolderModal] = useState(false)
@@ -20,7 +21,8 @@ const Navigation = ({folder}) => {
     const [searchParams] = useSearchParams()
     const type = searchParams.get('type')
 
-    
+    const {childFiles} = useReminderFiles()
+
     return ( 
         <>
         <NewFolderModal
@@ -47,13 +49,24 @@ const Navigation = ({folder}) => {
                     >
                         <Search  size={15} className="text-gray-900" />
                     </Button> */}
+                    {/* <button 
+                    className="relative w-8 h-8"
+                    type='button'
+                    onClick={()=>{}}
+                    >   <div className='absolute top-0 right-2 z-50  rounded-full h-4 w-4 bg-rose-500 flex items-center justify-center'>
+                            <div className='text-white font-semibold text-[10px]'>{childFiles.length}</div>
+                        </div>
+                        <Bell  size={20} className="text-gray-900 hover:-rotate-45 transition duration-300 ease-in-out" />
+                    </button> */}
+                    <NotificationPopup  files={childFiles}/>
                     <Button 
                     type='button'
                     secondary
                     onClick={onOpen}
                     active={!!type}
                     >
-                        <img src="/image/file-format/filter.png"   className={clsx("h-4 w-4", type ? "text-gray-400 " : "text-gray-900")} />
+                        <Filter size={15} className="text-gray-500" />
+                        {/* <img src="/image/file-format/filter.png"   className={clsx("h-4 w-4", type ? "text-gray-400 " : "text-gray-900")} /> */}
                     </Button>
                     </div>
                     <Button 

@@ -37,7 +37,7 @@ const RegisterModal = ({
         try{
             setIsLoading(true)
             // Create a new user in Firebase Authentication
-            await axios.post(`${baseURL}/auth/register`, {email: data.email, password: data.password})
+            await axios.post(`${baseURL}/auth/register`, {email: data.email, password: data.password, isAdmin: data?.type.value === "ADMIN"})
             .then(async(user)=>{
                 const userRef = doc(db, 'users', user.data.uid);
 

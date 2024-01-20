@@ -4,7 +4,6 @@ import ExpiredFileBox from "../../src/components/contents/expired-file-box";
 import { useExpiredFiles } from "../../src/hooks/use-expired-files";
 
 const ExpiredPage = () => {
-
     const {childFiles} = useExpiredFiles();
     return ( 
         <Sidebar >

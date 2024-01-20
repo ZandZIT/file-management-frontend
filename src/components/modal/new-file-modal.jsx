@@ -17,8 +17,9 @@ const NewFileModal = ({
     const [count, setCount] = useState(0)
     const [state, setState] = useState(1);
     const [startDate, setStartDate] = useState(null)
+    const [reminder, setReminder] = useState(null)
 
-  return (
+    return (
     <Modal 
     isOpen={isOpen} 
     onClose={onClose}>
@@ -41,10 +42,23 @@ const NewFileModal = ({
             </div>
             {state === 1 && 
             <div className='h-full flex flex-col transition-all ease-in-out justify-between'>
+                <div className='space-y-4'>
+
                 <DateSelect 
+                title={'expiry'}
                 startDate={startDate}
                 setStartDate={setStartDate}
                 />
+                {
+                    startDate && 
+                    <DateSelect
+                    title={'reminder'} 
+                    startDate={reminder}
+                    setStartDate={setReminder}
+                    />
+                }
+                </div>
+                {(!startDate || reminder) && 
                 <div className='ml-auto'>
                     <Button 
                     onClick={()=> setState(state + 1)}
@@ -52,7 +66,7 @@ const NewFileModal = ({
                     >
                         <div>Next</div>
                     </Button>
-                </div>
+                </div>}
             </div>}
             {state === 2 && 
             (<div className='space-y-4 flex-1 items-center justify-center flex flex-col '>
@@ -66,6 +80,7 @@ const NewFileModal = ({
                     (<>
                         <FileUpload  
                         expiredDate={startDate}
+                        reminder={reminder}
                         currentFolder={currentFolder} 
                         setCount={setCount}
                         setState={setState}

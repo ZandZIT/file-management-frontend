@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import Dropzone from 'react-dropzone'
-import { ROOT_FOLDER } from '../../hooks/use-folder'
 import PropTypes from 'prop-types'
 import { collections, db, storage } from '../../../firebase'
 import { addDoc,  doc,  serverTimestamp, updateDoc } from 'firebase/firestore'
@@ -10,6 +9,7 @@ import { useCurrentUser } from '../../hooks/use-current-user'
 
 const FileUpload = ({
     expiredDate,
+    reminder,
     currentFolder,
     setCount,
     setState,
@@ -35,26 +35,31 @@ const FileUpload = ({
         })
 
     }
-
+    // console.log(currentFolder)
     const uploadPost = async(file)=> {
         if(!user) return
 
        try{
-            const filePath =
-            currentFolder === ROOT_FOLDER
-                ? `${currentFolder.path.join("/")}/${file.name}`
-                : `${currentFolder.path.join("/")}/${currentFolder.name}/${file.name}`
+            // const filePath =
+            // currentFolder === ROOT_FOLDER
+            // ? `${currentFolder.path.join("/")}/${file.name}`
+            // : `${currentFolder.path.map(folder => folder.name).filter(Boolean).join("/")}/${currentFolder.name}/${file.name}`;
 
+            const folderPath = currentFolder.path.map(folder => folder.name).filter(Boolean).join("/");
+            const filePath = folderPath ? `${folderPath}/${currentFolder.name}/${file.name}` : `${currentFolder.name}/${file.name}`;
+
+            // console.log(filePath)
             const docRef = await addDoc(collections.files, {
                 name: file.name,
                 createdAt: serverTimestamp(),
                 expiredAt: expiredDate,
+                reminder: reminder,
                 folderId: currentFolder?.id,
                 userId: user.uid,
                 size: file.size,
+                path: filePath,
                 type: file.name.split('.')[1],
             })
-        
             const fileRef = ref(storage, `/files/${user.uid}/${filePath}`)
             await uploadBytes(fileRef, file)
             .then( async () => {
@@ -121,6 +126,7 @@ const FileUpload = ({
 
 FileUpload.propTypes = {
     expiredDate: PropTypes.object,
+    reminder: PropTypes.object,
     currentFolder: PropTypes.object,
     setCount: PropTypes.func,
     setIsLoading: PropTypes.func,

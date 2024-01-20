@@ -1,4 +1,4 @@
-import { Bell, File, Star, UsersRound } from "lucide-react";
+import { File, FileClock, Star, UsersRound } from "lucide-react";
 import { useMemo } from "react";
 import { useExpiredFiles } from "./use-expired-files";
 
@@ -7,6 +7,7 @@ export const useRoutes = () => {
   const pathname = window.location.pathname;
   const {childFiles} = useExpiredFiles()
 
+  
 
   const routes = useMemo(
     () => [
@@ -32,10 +33,10 @@ export const useRoutes = () => {
         allAccess: false,
       },
       {
-        label: "Notification",
+        label: "Expired",
         href: "/expired",
-        icon: Bell,
-        count: childFiles.length,
+        icon: FileClock,
+        count: childFiles?.length,
         active: pathname === "/expired",
         allAccess: true,
       },

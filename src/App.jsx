@@ -9,9 +9,25 @@ import UsersPage from "../pages/users/page"
 import StaredPage from "../pages/stared/page"
 import Unauthorized from "./components/ui/unauthorized"
 import ExpiredPage from "../pages/expired/page"
+import { useEffect, useState } from "react"
+import { useAdmin } from "./hooks/use-admin"
 
 const App = () => {
   const [user, loading] = useAuthState(auth); 
+  const {onSet} = useAdmin()
+
+  useEffect(() => {
+    const fetchClaims = async () => {
+      const {
+        claims: { isAdmin },
+      } = await user.getIdTokenResult()
+
+      onSet(isAdmin === true)
+    }
+
+    if (user) fetchClaims()
+  }, [user, onSet])
+
   if(loading){
     return (
       <Loading large="large" />

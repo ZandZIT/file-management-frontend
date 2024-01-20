@@ -2,7 +2,7 @@ import { query, where, orderBy, onSnapshot } from "firebase/firestore";
 import { compareDesc } from "date-fns";
 import { collections } from "../firebase";
 
-export const getExpiredFilesByUser = async(user, isAdmin, callback) => {
+export const getReminderFilesByUser = async(user, isAdmin, callback) => {
   
   if (!user?.uid) return null;
 
@@ -11,16 +11,16 @@ export const getExpiredFilesByUser = async(user, isAdmin, callback) => {
   if (isAdmin) {
     q = query(
       collections.files,
-      where("expiredAt", "!=", null),
-      orderBy("expiredAt"), // First sort order on "expiredAt"
+      where("reminder", "!=", null),
+      orderBy("reminder"), // First sort order on "reminder"
       orderBy("createdAt") // Second sort order on "createdAt" if needed
     );
   } else {
     q = query(
       collections.files,
       where("userId", "==", user.uid),
-      where("expiredAt", "!=", null),
-      orderBy("expiredAt"), // First sort order on "expiredAt"
+      where("reminder", "!=", null),
+      orderBy("reminder"), // First sort order on "reminder"
       orderBy("createdAt") // Second sort order on "createdAt" if needed
     );
   }
@@ -31,8 +31,8 @@ export const getExpiredFilesByUser = async(user, isAdmin, callback) => {
     // Check if there are changes in the snapshot
     // if (!snapshot.metadata.hasPendingWrites) {
       snapshot.forEach((doc) => {
-        if (doc.data().expiredAt) {
-          const result = compareDesc(new Date(), doc.data().expiredAt.toDate());
+        if (doc.data().reminder) {
+          const result = compareDesc(new Date(), doc.data().reminder.toDate());
 
           if (result === -1) {
             expiredFiles.push({ ...doc.data(), id: doc.id });
@@ -54,7 +54,7 @@ export const getExpiredFilesByUser = async(user, isAdmin, callback) => {
   // const expiredFiles = [];
 
   // querySnapshot.forEach((doc) => {
-  //   const result = compareDesc(new Date(), doc.data().expiredAt.toDate());
+  //   const result = compareDesc(new Date(), doc.data().reminder.toDate());
   //   if (result === -1) {
   //     expiredFiles.push({ ...doc.data(), id: doc.id });
   //   }

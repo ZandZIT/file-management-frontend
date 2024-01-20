@@ -21,7 +21,7 @@ const SidebarItem = ({
         )}
       >
        
-        {label === "Notification" && <div className='absolute right-3 top-2 rounded-full h-4 w-4 bg-rose-500 flex items-center justify-center'>
+        {label === "Expired" && <div className='absolute right-3 top-2 rounded-full h-4 w-4 bg-rose-500 flex items-center justify-center'>
           <div className='text-white font-semibold text-[10px]'>{count}</div>
         </div>}
         <Icon className='h-5 w-5 shrink-0' />

@@ -6,13 +6,11 @@ import PropTypes from 'prop-types'
 import UpdateNameModal from '../modal/update-name-modal'
 import AlertModal from '../modal/alert-modal'
 import toast from 'react-hot-toast'
-import { getTotalFilesByUser } from '../../../actions/get-total-files'
-import { getDeleteDocById } from '../../../actions/get-delete-doc'
 import { getRenameDocById } from '../../../actions/get-rename-doc'
 import FilePreviewModal from '../modal/file-preview-modal'
-import { useCurrentState } from '../../hooks/use-current-state'
-import { ROOT_FOLDER } from '../../hooks/use-folder'
-import { useCurrentUser } from '../../hooks/use-current-user'
+import { getDeleteFile } from '../../../actions/get-delete-file'
+import { getDeleteFolder } from '../../../actions/get-delete-folder'
+import { getTotalDocsByUser } from '../../../actions/get-total-doc'
 
   
 
@@ -22,13 +20,17 @@ export default function ContentActions({current}) {
   const [previewModal, setPreviewModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const {state} = useCurrentState()
-  const {user} = useCurrentUser()
-
+  console.log(current)
   const isFile = current.type ? !!current.type : false;
-
   const title = current.type ? "Delete File" : "Delete Folder";
   const description = "This action can not be undone!"
+
+  // const helper = useCallback(async()=>{
+  //   if(!current.folderId) return;
+    
+  //   onSet(await getFolderById(current.folderId))
+    
+  // },[ current, onSet ])
 
 
   const handleStar = async(data) => {
@@ -43,21 +45,21 @@ export default function ContentActions({current}) {
     if(!current) return null
     try{
         setIsLoading(true)
-        const filePath =
-            state === ROOT_FOLDER
-                ? `${state.path.join("/")}/${current.name}`
-                : `${state.path.join("/")}/${state.name}/${current.name}`
 
         if(current?.type){
-          await getDeleteDocById("files", current.id, filePath, user).then(()=> {
-            toast.success("File deleted")
-          });
+          await getDeleteFile(current).then((doc)=> {
+            if(doc){
+              toast.error("Something went wrong!")
+            }else{
+              toast.success("File deleted")
+            }
+          })
         }else{
-          const totalNumberOfFiles = await getTotalFilesByUser(current)
+          const totalNumberOfFiles = await getTotalDocsByUser(current)
           if(totalNumberOfFiles > 0){
-            return toast.error("Delete all the files within the folder")
+            return toast.error("Delete all documents within folder!")
           }
-          await getDeleteDocById("folders", current.id).then(()=> {
+          await getDeleteFolder(current).then(()=> {
             toast.success("Folder deleted")
           });
         }

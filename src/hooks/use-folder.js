@@ -1,7 +1,8 @@
-import { useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import { collections, db } from "../../firebase";
 import { doc, getDoc, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { useAdmin } from "./use-admin";
 
 const ACTIONS = {
   SELECT_FOLDER: "select-folder",
@@ -44,9 +45,23 @@ function reducer(state, { type, payload}){
     }
 }
 
-export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
-  // const [user] = useAuthState(auth);
+export function useFolder(folderId = null, folder = null, showStared) {
+  
+  // getAuth()
+  // .currentUser.getIdTokenResult()
+  // .then((idTokenResult) => {
+  //   // Confirm the user is an Admin.
+  //   if (idTokenResult.claims) {
+  //     setIsAdmin(idTokenResult.claims.isAdmin);
+  //   }
+  // })
+  // .catch((error) => {
+  //   console.log(error);
+  // });
+
   const curerntUser = getAuth().currentUser;
+  const {isAdmin} = useAdmin()
+
   const [state, dispatch] = useReducer(reducer, {
     folderId,
     folder,
@@ -80,9 +95,7 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
       });
   }, [folderId]);
 
-  // update chidFolder of a specific folderId
-  useEffect(() => {
-    const setChildFodlers = async () => {
+    const setChildFodlers = useCallback(async () => {
       try {
         var q;
         if (showStared) {
@@ -110,7 +123,7 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
 
         // Execute the query
         onSnapshot(q, async (snapshot) => {
-          const data = await getDataWithUserDetail(snapshot)
+          const data = await getDataWithUserDetail(snapshot);
           dispatch({
             type: ACTIONS.SET_CHILD_FOLDERS,
             payload: { childFolders: data },
@@ -119,14 +132,9 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
       } catch (error) {
         console.error(error);
       }
-    };
+    }, [folderId, curerntUser, showStared, isAdmin]);
 
-    if (curerntUser?.uid) setChildFodlers();
-  }, [folderId, curerntUser, showStared, isAdmin]);
-
-  // update chidFiles of a specific folderId
-  useEffect(() => {
-    const setChildFiles = async () => {
+    const setChildFiles = useCallback(async () => {
       try {
         var q;
         if (showStared) {
@@ -153,7 +161,7 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
 
         // Execute the query
         onSnapshot(q, async (snapshot) => {
-          const data = await getDataWithUserDetail(snapshot)
+          const data = await getDataWithUserDetail(snapshot);
           dispatch({
             type: ACTIONS.SET_CHILD_FILES,
             payload: { childFiles: data },
@@ -162,13 +170,22 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
       } catch (error) {
         console.error(error);
       }
-    };
+    }, [folderId, curerntUser, showStared, isAdmin]);
 
-    if (curerntUser?.uid) setChildFiles();
-  }, [folderId, curerntUser, showStared, isAdmin]);
+
+  // update chidFolder of a specific folderId
+  useEffect(() => {
+    if (curerntUser?.uid) {
+      setChildFiles();
+      setChildFodlers();
+    }
+  }, [curerntUser, setChildFiles, setChildFodlers]);
+
+  // update chidFiles of a specific folderId
+
   
 
-  const getDataWithUserDetail = async (snapshot) => {
+const getDataWithUserDetail = async (snapshot) => {
     const data = [];
     const userPromises = [];
     snapshot.forEach((document) => {
@@ -195,3 +212,4 @@ export function useFolder(folderId = null, folder = null, showStared, isAdmin) {
 
   return state;
 }
+

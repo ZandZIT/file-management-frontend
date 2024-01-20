@@ -4,11 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import PropTypes from 'prop-types'
 
 export default function DateSelect({
-    startDate, setStartDate
+    startDate, setStartDate, title
 }) {
   return (
     <div className="space-y-2">
-        <h2 className="text-sm pb-2 text-neutral-500">Please select an expiry date</h2>
+        <h2 className="text-sm pb-2 text-neutral-500">Please select {title} date</h2>
         <DatePicker
         className="p-2 ring-2 ring-neutral-400/50 text-xs w-[200px] focus:outline-none focus:border-none rounded-md focus-visible:ring-neutral-900 placeholder:text-xs placeholder:text-gray-500/70"
         selected={startDate}
@@ -16,13 +16,16 @@ export default function DateSelect({
         isClearable
         placeholderText="Pick a date"
         />
-        <h2 className="text-[10px] text-neutral-400 font-light tracking-wider">[This is optional]</h2>
+        {title === "expiry" && <h2 className="text-[10px] text-neutral-400 font-light tracking-wider">[This is optional]</h2>}
+        {title === "reminder" && <h2 className="text-[10px] text-neutral-400 font-light tracking-wider">[This is optional]</h2>}
+
     </div>
     
   )
 }
 
 DateSelect.propTypes = {
+    title: PropTypes.string,
     startDate: PropTypes.object,
     setStartDate: PropTypes.func
 }

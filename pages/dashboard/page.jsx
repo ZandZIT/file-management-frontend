@@ -14,14 +14,14 @@ import clsx from "clsx";
 import Loading from "../../src/components/ui/loading";
 
 const DashboarPage =() => {
-    const {user} = useCurrentUser()
+
+    
+    const {user, loading} = useCurrentUser()
     const {state, onSet} = useCurrentState()
     const {folderId} = useParams()
-    
-    const {folder, childFolders, childFiles} = useFolder(folderId, state, false, user?.userType === "ADMIN")
+    const {folder, childFolders, childFiles} = useFolder(folderId, state, false )
 
     const scrolled = useScrollTop()
-
 
     useEffect(()=>{
         if(folder && folderId){
@@ -35,7 +35,7 @@ const DashboarPage =() => {
     //    const expired = await getAllFilesByUser(user)
     //    console.log(expired)
     // }
-    if(!user) return <Loading large={"large"} />
+    if(loading && !user) return <Loading large={"large"} />
 
     return ( 
         <Sidebar >

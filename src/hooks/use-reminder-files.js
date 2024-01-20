@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getExpiredFilesByUser } from "../../actions/get-expired-files";
 import { getAuth } from "firebase/auth";
 import { useAdmin } from "./use-admin";
+import { getReminderFilesByUser } from "../../actions/get-reminder-files";
 
-export const useExpiredFiles = () => {
+export const useReminderFiles = () => {
   const { isAdmin } = useAdmin();
   const user = getAuth().currentUser;
 
@@ -11,13 +11,13 @@ export const useExpiredFiles = () => {
 
   useEffect(() => {
   //   const getData = async (user) => {
-  //     return await getExpiredFilesByUser(user, isAdmin);
+  //     return await getReminderFilesByUser(user, isAdmin);
   //   };
   //   getData(getAuth().currentUser).then((doc) => {
   //     setChildFiles(doc);
   //   });
 
-    const unsubscribe = getExpiredFilesByUser(user, isAdmin, (updatedData) => {
+    const unsubscribe = getReminderFilesByUser(user, isAdmin, (updatedData) => {
       // console.log("Updating files:", updatedData);
       setChildFiles(updatedData);
     });
