@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 
 const SidebarItem = ({
@@ -12,8 +13,8 @@ const SidebarItem = ({
 }) => {
   return (
     <li className='w-full relative'>
-      <a
-        href={href}
+      <Link
+        to={href}
         onClick={onClick}
         className={clsx(
           'flex gap-x-3 text-sm p-3 relative cursor-pointer leading-6  hover:text-black hover:bg-gray-100',
@@ -26,7 +27,7 @@ const SidebarItem = ({
         </div>}
         <Icon className='h-5 w-5 shrink-0' />
         <span className='sr-only'>{label}</span>
-      </a>
+      </Link>
     </li>
   );
 };
