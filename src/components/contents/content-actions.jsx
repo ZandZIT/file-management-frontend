@@ -20,7 +20,7 @@ export default function ContentActions({current}) {
   const [previewModal, setPreviewModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  console.log(current)
+  // console.log(current)
   const isFile = current.type ? !!current.type : false;
   const title = current.type ? "Delete File" : "Delete Folder";
   const description = "This action can not be undone!"
@@ -98,21 +98,21 @@ export default function ContentActions({current}) {
     <div className="absolute right-8 ">
       <div className="flex items-center gap-x-1">
           {current.type && 
-          <button  type="button" onClick={()=> setPreviewModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
+          <button  type="button" onClick={()=> setPreviewModal(true)} className="hidden group-hover:lg:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {<Eye className="h-4 w-4" />}
           </button> }
-          <button onClick={()=>handleStar(current)}  className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
+          <button onClick={()=>handleStar(current)}  className="hidden group-hover:lg:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {current.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
           </button>
           {!current.type &&
-          <button  type="button" onClick={()=> setRenameModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
+          <button  type="button" onClick={()=> setRenameModal(true)} className="hidden group-hover:lg:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {<PencilLine className="h-4 w-4" />}
           </button> }
-          <button onClick={()=> setAlertModal(true)} className="hidden group-hover:md:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
+          <button onClick={()=> setAlertModal(true)} className="hidden group-hover:lg:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {<Trash className="h-4 w-4 text-rose-500" />}
           </button>
       </div>
-      <div className="relative block md:hidden">
+      <div className="relative block lg:hidden">
         <Menu as="div" className=" inline-block text-left">
           <div>
               <Menu.Button className="flex w-8 h-8  items-center justify-center rounded-full hover:bg-gray-300/40  text-sm font-medium text-white  focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900/75">

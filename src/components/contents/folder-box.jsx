@@ -8,7 +8,7 @@ const FolderBox = ({folder}) => {
     <div className=" group border-b py-2 px-4 cursor-pointer transition-all hover:bg-neutral-200/50">
         <div className="flex items-center justify-between gap-y-2 gap-x-6">
             <Link 
-            className="flex-1 w-full grid grid-cols-3 items-center  gap-x-4"
+            className="flex-1 w-full grid grid-cols-4 items-center  gap-x-4"
             to={`/folders/${folder.id}`}
             type={'button'}
             >
@@ -21,6 +21,9 @@ const FolderBox = ({folder}) => {
                 </div>
                 <div className="text-xs text-neutral-500 ">
                     {folder.createdAt && format((folder.createdAt)?.toDate(), "PP")}
+                </div>
+                <div className="text-xs text-neutral-500 ">
+                    {folder.expiredAt ? format((folder.expiredAt)?.toDate(), "PP") : <p className="ml-6">N/A</p>}
                 </div>
                 
             </Link>

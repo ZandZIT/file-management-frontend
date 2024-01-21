@@ -10,7 +10,6 @@ import { db, storage } from '../../../firebase'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 import { doc, updateDoc } from 'firebase/firestore'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
 import { useCurrentUser } from '../../hooks/use-current-user'
 import Select from '../inputs/select'
 import { types } from '../../utils'
@@ -44,7 +43,7 @@ const SettingsModal = ({
                 })
             }else{
                 const imageRef = ref(storage, `users/${currentUser?.uid}/profile`);
-                await uploadString(imageRef, image, 'data_url').then( async (Spanshot) => {
+                await uploadString(imageRef, image, 'data_url').then( async () => {
                     const downloadURL = await getDownloadURL(imageRef)
                     await updateDoc(doc(db, 'users', currentUser?.uid),{
                         image: downloadURL,

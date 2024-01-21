@@ -39,7 +39,7 @@ const AuthForm = () => {
     })
     }catch(error){
       console.log(error)
-      toast.error("Somethong went wrong")
+      toast.error("Something went wrong")
     }finally{
       setIsLoading(false)
     }

@@ -45,7 +45,7 @@ const FileUpload = ({
             // ? `${currentFolder.path.join("/")}/${file.name}`
             // : `${currentFolder.path.map(folder => folder.name).filter(Boolean).join("/")}/${currentFolder.name}/${file.name}`;
 
-            const folderPath = currentFolder.path.map(folder => folder.name).filter(Boolean).join("/");
+            const folderPath = currentFolder.path?.map(folder => folder.name).filter(Boolean).join("/");
             const filePath = folderPath ? `${folderPath}/${currentFolder.name}/${file.name}` : `${currentFolder.name}/${file.name}`;
 
             // console.log(filePath)

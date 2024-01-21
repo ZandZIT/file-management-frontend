@@ -3,7 +3,7 @@ import { collections } from "../../firebase";
 
 
 export const useFoldersByParentId = async (folderId, user) => {
-  console.log(user)
+  // console.log(user)
   try {
     const q = query(
       collections.folders,

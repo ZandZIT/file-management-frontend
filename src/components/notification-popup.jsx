@@ -3,8 +3,9 @@ import { Bell } from "lucide-react"
 import { Fragment } from "react"
 import Button from "./ui/button"
 import PropTypes from 'prop-types'
-import { fileFormat, formatFileSize } from "../utils"
+import { fileFormat } from "../utils"
 import { Link } from "react-router-dom"
+import { format } from "date-fns"
 
 const NotificationPopup = ({files}) => {
 
@@ -49,8 +50,9 @@ const NotificationPopup = ({files}) => {
                             </span>
                             </div>
                         </div>
-                        <div className="relative  bg-white p-4 ">
-                            {files?.map((file) => (
+                        <div className="relative  bg-white p-4 overflow-auto h-[240px]">
+                            {files.length ? 
+                            files?.map((file) => (
                             <div key={file.name} className="group py-2 px-4 rounded-lg cursor-pointer transition-all hover:bg-neutral-200/50">
                                 <Link 
                                     className="flex-1 flex  gap-x-4"
@@ -65,12 +67,29 @@ const NotificationPopup = ({files}) => {
                                             <img src={fileFormat(file)?.src} className="h-5 w-5 mr-2" />
                                             <span className="truncate max-w-[250px] text-xs overflow-hidden">{file.name}</span>
                                         </div>
-                                        <div className="text-[10px] ml-7 text-neutral-500">{formatFileSize(file?.size)}</div>
+                                        <div className="text-[10px] ml-7 font-semibold text-neutral-700">  
+                                            <span className="">Expires at: </span>
+                  
+                                            {file.expiredAt && format((file.expiredAt)?.toDate(), "PP")}
+                                        </div>
                                     </div>
                                 </Link>
 
                             </div>
-                        ))}
+                        ))
+                        : 
+                        <div className="">
+                            <div className="py-2 ">
+                                <span className="flex items-center justify-center">
+                                    <span className="text-xs text-gray-900 font-semibold ">
+                                    No Reminder Right Now!
+                                    </span>
+                                </span>
+                            <span className="block text-[10px] text-center text-gray-500">
+                                You are up to date
+                            </span>
+                            </div>
+                        </div>}
                     </div>
                     
                     </div>

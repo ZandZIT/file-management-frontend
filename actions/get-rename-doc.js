@@ -13,7 +13,7 @@ export const getRenameDocById = async(type, data) => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Somethong went wrong");
+        toast.error("Something went wrong");
       });
   } catch (error) {
     console.error("Error updating document:", error);

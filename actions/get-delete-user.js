@@ -2,9 +2,9 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
 
-export const getDeleteUserById = async(type, id) => {
+export const getDeleteUserById = async(id) => {
   try {
-    const docRef = doc(db, type, id)
+    const docRef = doc(db, "users", id)
     await deleteDoc(docRef).then(doc =>{
       return doc
     })
