@@ -50,7 +50,7 @@ const NotificationPopup = ({files}) => {
                             </span>
                             </div>
                         </div>
-                        <div className="relative  bg-white p-4 overflow-auto h-[240px]">
+                        <div className="relative  bg-white p-4 overflow-auto max-h-[240px]">
                             {files.length ? 
                             files?.map((file) => (
                             <div key={file.name} className="group py-2 px-4 rounded-lg cursor-pointer transition-all hover:bg-neutral-200/50">
@@ -67,8 +67,8 @@ const NotificationPopup = ({files}) => {
                                             <img src={fileFormat(file)?.src} className="h-5 w-5 mr-2" />
                                             <span className="truncate max-w-[250px] text-xs overflow-hidden">{file.name}</span>
                                         </div>
-                                        <div className="text-[10px] ml-7 font-semibold text-neutral-700">  
-                                            <span className="">Expires at: </span>
+                                        <div className="text-xs ml-7 font-bold tracking-wider text-neutral-800">  
+                                            <span className="font-medium">Ex: </span>
                   
                                             {file.expiredAt && format((file.expiredAt)?.toDate(), "PP")}
                                         </div>

@@ -18,7 +18,6 @@ const DesktopSidebar = ({
     const [registerModal, setRegisterModal] = useState(false)
     const [settingsModal, setSettingsModal] = useState(false)
     const [alertModal, setAlertModal] = useState(false);
-    console.log(currentUser)
     const routes = useRoutes()
     
     const onAction = ()=>{

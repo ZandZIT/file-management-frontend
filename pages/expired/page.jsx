@@ -31,7 +31,7 @@ const ExpiredPage = () => {
                     <div className="mt-[104px] px-4">
                         { 
                             childFiles.length ? childFiles?.map((file) => <ExpiredFileBox key={file.id} file={file} />)
-                            : <div className="text-xs text-center mt-4 ">No File</div>
+                            : <div className="text-xs text-center text-gray-500 mt-10 ">No File</div>
                         }
                     </div>
                 </div>

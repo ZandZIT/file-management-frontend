@@ -1,37 +1,15 @@
-import { useParams } from "react-router-dom";
 import Sidebar from "../../src/components/sidebar/sidebar";
-import { useCurrentUser } from "../../src/hooks/use-current-user";
-import { useFolder } from "../../src/hooks/use-folder";
-import { useCurrentState } from "../../src/hooks/use-current-state";
-import { useEffect } from "react";
+
 import ContentList from "../../src/components/contents/content-list";
-import Loading from "../../src/components/ui/loading";
 import Title from "../../src/components/ui/title";
 import { clsx } from "clsx";
 import { useScrollTop } from "../../src/hooks/use-scroll";
+import { useStaredDocs } from "../../src/hooks/use-stared-docs";
 
 const StaredPage = () => {
 
-    const {user} = useCurrentUser()
-
-    const {state, onSet} = useCurrentState()
-    const {folderId} = useParams()
-    const folders = useFolder(folderId, state, true)
-    const {folder, childFolders, childFiles} = folders;
+    const {files, folders} = useStaredDocs()
     const scrolled = useScrollTop()
-
-    // console.log(childFiles, childFolders)
-
-    useEffect(()=>{
-        if(folder && folderId){
-            onSet(folder)
-        }
-    },[folderId, folder, onSet])
-
-    // const {files: childFiles, folders: childFolders} = useStaredFiles()
-    // console.log(childFiles)
-    
-    if(!user) return <Loading />
 
     return ( 
         <Sidebar >
@@ -45,14 +23,14 @@ const StaredPage = () => {
                     </div>
                     
                     <div className="mt-[86px]">
-                        {(childFolders?.length > 0 || childFiles?.length > 0 )  && <ContentList folders={childFolders} files={childFiles} />}
-                        {childFolders?.length === 0 && childFiles?.length === 0 && <div className="text-center text-xs text-gray-500">There is no items saved</div> }
+                        {( folders?.length > 0 || files?.length > 0 )  && <ContentList folders={folders} files={files} />}
+                        { (folders?.length === 0 &&  files?.length === 0) && <div className="text-center text-xs text-gray-500 mt-10">There is no items saved</div> }
                     </div>
                 </div>
             </div>
         </Sidebar>
      );
 }
-// {childFolders?.length === 0 && childFiles?.length === 0 && <div className="text-center text-xs text-gray-500">There is no items saved</div> }
+// {childFolders?.length === 0 && files?.length === 0 && <div className="text-center text-xs text-gray-500">There is no items saved</div> }
 
 export default StaredPage;

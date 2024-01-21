@@ -2,10 +2,11 @@ import clsx from 'clsx'
 import Dropzone from 'react-dropzone'
 import PropTypes from 'prop-types'
 import { collections, db, storage } from '../../../firebase'
-import { addDoc,  doc,  serverTimestamp, updateDoc } from 'firebase/firestore'
+import { addDoc,  doc,  getDocs,  query,  serverTimestamp, updateDoc, where } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import toast from 'react-hot-toast'
 import { useCurrentUser } from '../../hooks/use-current-user'
+import { getAuth } from 'firebase/auth'
 
 const FileUpload = ({
     expiredDate,
@@ -47,9 +48,42 @@ const FileUpload = ({
 
             const folderPath = currentFolder.path?.map(folder => folder.name).filter(Boolean).join("/");
             const filePath = folderPath ? `${folderPath}/${currentFolder.name}/${file.name}` : `${currentFolder.name}/${file.name}`;
-
+            
             // console.log(filePath)
-            const docRef = await addDoc(collections.files, {
+            const fileRef = ref(storage, `/files/${user.uid}/${filePath}`)
+             // Upload the file
+            await uploadBytes(fileRef, file);
+
+            // Get the download URL
+            const downloadURL = await getDownloadURL(fileRef);
+            // console.log()
+            // Check if the file already exists in the database
+            const q = query(
+                collections.files,
+                where("name", "==", file.name),
+                where("userId", "==", getAuth().currentUser.uid),
+                where("folderId", "==", currentFolder.id)
+            );
+            
+            const querySnapshot = await getDocs(q);
+            
+            if (!querySnapshot.empty) {
+                // If there are matching documents, retrieve the first one
+                const id = querySnapshot.docs[0].id;
+                
+                // Update the existing document with the new download URL
+                await updateDoc(doc(db, 'files', id), {
+                    createdAt: serverTimestamp(),
+                    expiredAt: expiredDate,
+                    reminder: reminder,
+                    size: file.size,
+                    downloadURL: downloadURL
+                });
+
+                toast.success('Replaced the previous file!');
+            } else {
+                // If no matching documents, add a new document to the collection
+                await addDoc(collections.files, {
                 name: file.name,
                 createdAt: serverTimestamp(),
                 expiredAt: expiredDate,
@@ -59,16 +93,11 @@ const FileUpload = ({
                 size: file.size,
                 path: filePath,
                 type: file.name.split('.')[1],
-            })
-            const fileRef = ref(storage, `/files/${user.uid}/${filePath}`)
-            await uploadBytes(fileRef, file)
-            .then( async () => {
-                const downloadURL = await getDownloadURL(fileRef)
-                await updateDoc(doc(db, 'files', docRef.id),{
-                    downloadURL: downloadURL
-                })
-                toast.success(`Uploaded`);
-            })
+                downloadURL: downloadURL
+                });
+
+                toast.success('Uploaded');
+            }
         }
         catch(error){
             toast.error("Something went wrong")

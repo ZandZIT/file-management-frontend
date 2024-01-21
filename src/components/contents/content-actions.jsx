@@ -11,6 +11,7 @@ import FilePreviewModal from '../modal/file-preview-modal'
 import { getDeleteFile } from '../../../actions/get-delete-file'
 import { getDeleteFolder } from '../../../actions/get-delete-folder'
 import { getTotalDocsByUser } from '../../../actions/get-total-doc'
+import { getAuth } from 'firebase/auth'
 
   
 
@@ -20,7 +21,8 @@ export default function ContentActions({current}) {
   const [previewModal, setPreviewModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  // console.log(current)
+  const user = getAuth().currentUser;
+  
   const isFile = current.type ? !!current.type : false;
   const title = current.type ? "Delete File" : "Delete Folder";
   const description = "This action can not be undone!"
@@ -97,14 +99,15 @@ export default function ContentActions({current}) {
     />
     <div className="absolute right-8 ">
       <div className="flex items-center gap-x-1">
-          {current.type && 
+          {current?.type && 
           <button  type="button" onClick={()=> setPreviewModal(true)} className="hidden group-hover:lg:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {<Eye className="h-4 w-4" />}
           </button> }
+          {user.uid == current?.userId && 
           <button onClick={()=>handleStar(current)}  className="hidden group-hover:lg:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
-              {current.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
-          </button>
-          {!current.type &&
+              {current?.star ? <Star className="h-4 w-4 fill-black" /> : <Star className="h-4 w-4 " />}
+          </button>}
+          {!current?.type &&
           <button  type="button" onClick={()=> setRenameModal(true)} className="hidden group-hover:lg:flex h-8 w-8 items-center justify-center hover:bg-neutral-300/50 rounded-full z-20">
               {<PencilLine className="h-4 w-4" />}
           </button> }
@@ -156,16 +159,15 @@ export default function ContentActions({current}) {
                       Preview
                     </button>
                   </Menu.Item>}
-                  <Menu.Item as="a" key={"Star"}>
+                  {user.uid == current.userId && <Menu.Item as="a" key={"Star"}>
                       <button
                       onClick={() => handleStar(current)}
                       className={clsx("group font-medium flex w-full items-center rounded-md px-2 py-2 text-xs bg-transparent hover:bg-neutral-200/50 transitio text-gray-900 ")}
                     >
-                      <Star
-                      className={clsx("mr-2 h-4 w-4 text-gray-700 " )}/>
+                      {current.star ? <Star className="mr-2 h-4 w-4 fill-black" /> : <Star className="h-4 w-4 mr-2" />}
                       Star
                     </button>
-                  </Menu.Item>
+                  </Menu.Item>}
                   <Menu.Item as="a" key={"Delete"}>
                       <button
                       onClick={() => setAlertModal(true)}
