@@ -9,13 +9,17 @@ export const getRenameDocById = async(type, data) => {
     updateDoc(docRef, {
       star: !data?.star,
     }).then(() => {
-        toast.success(
-          `${
-            data?.star
-              ? "Folder remove from Favorites!"
-              : "Folder added to Favorites!"
-          }`
-        );
+        let message;
+        if(data.type){
+          message = data?.star
+            ? "File remove from Favorites!"
+            : "File added to Favorites!";
+        }else{
+          message = data?.star
+            ? "Folder remove from Favorites!"
+            : "Folder added to Favorites!";
+        }
+        toast.success(message);
       })
       .catch((error) => {
         console.log(error);

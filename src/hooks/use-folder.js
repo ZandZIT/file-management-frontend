@@ -45,7 +45,7 @@ function reducer(state, { type, payload}){
     }
 }
 
-export function useFolder(folderId = null, folder = null, showStared) {
+export function useFolder(folderId = null, folder = null) {
   
   // getAuth()
   // .currentUser.getIdTokenResult()
@@ -98,15 +98,7 @@ export function useFolder(folderId = null, folder = null, showStared) {
     const setChildFodlers = useCallback(async () => {
       try {
         var q;
-        if (showStared) {
-          q = query(
-            collections.folders,
-            // where("parentId", "==", folderId),
-            where("userId", "==", curerntUser.uid),
-            where("star", "==", showStared),
-            orderBy("createdAt")
-          );
-        } else if (isAdmin) {
+        if (isAdmin) {
           q = query(
             collections.folders,
             where("parentId", "==", folderId),
@@ -132,19 +124,12 @@ export function useFolder(folderId = null, folder = null, showStared) {
       } catch (error) {
         console.error(error);
       }
-    }, [folderId, curerntUser, showStared, isAdmin]);
+    }, [folderId, curerntUser, isAdmin]);
 
     const setChildFiles = useCallback(async () => {
       try {
         var q;
-        if (showStared) {
-          q = query(
-            collections.files,
-            where("userId", "==", curerntUser.uid),
-            where("star", "==", showStared),
-            orderBy("createdAt")
-          );
-        } else if (isAdmin) {
+        if (isAdmin) {
           q = query(
             collections.files,
             where("folderId", "==", folderId),
@@ -170,7 +155,7 @@ export function useFolder(folderId = null, folder = null, showStared) {
       } catch (error) {
         console.error(error);
       }
-    }, [folderId, curerntUser, showStared, isAdmin]);
+    }, [folderId, curerntUser, isAdmin]);
 
 
   // update chidFolder of a specific folderId
