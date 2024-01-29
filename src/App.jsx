@@ -9,7 +9,7 @@ import UsersPage from "../pages/users/page"
 import StaredPage from "../pages/stared/page"
 import Unauthorized from "./components/ui/unauthorized"
 import ExpiredPage from "../pages/expired/page"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useAdmin } from "./hooks/use-admin"
 
 const App = () => {

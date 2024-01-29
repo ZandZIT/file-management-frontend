@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useCurrentUser } from "./use-current-user";
 import { onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { collections } from "../../firebase";
 import { getDataWithUserDetail } from "../utils";
+import { getAuth } from "firebase/auth";
 
 
 export const useStaredFiles = ()=>{
-    const { user } = useCurrentUser();
+    const user = getAuth().currentUser;
     const [files, setFiles] = useState([]);
     const [folders, setFolders] = useState([]);
 

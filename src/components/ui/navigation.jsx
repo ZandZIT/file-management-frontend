@@ -9,6 +9,7 @@ import FilterSlider from "../filter-slider";
 import { useSearchParams } from "react-router-dom";
 import { useReminderFiles } from "../../hooks/use-reminder-files";
 import NotificationPopup from "../notification-popup";
+import clsx from "clsx";
 
 const Navigation = ({folder}) => {
     const [newFolderModal, setNewFolderModal] = useState(false)
@@ -65,7 +66,7 @@ const Navigation = ({folder}) => {
                     onClick={onOpen}
                     active={!!type}
                     >
-                        <Filter size={15} className="text-gray-500" />
+                        {<Filter size={15} className={clsx( type && "fill-gray-500",  "text-gray-500 shrink-0")} />}
                         {/* <img src="/image/file-format/filter.png"   className={clsx("h-4 w-4", type ? "text-gray-400 " : "text-gray-900")} /> */}
                     </Button>
                     </div>
@@ -75,7 +76,7 @@ const Navigation = ({folder}) => {
                     onClick={()=> setNewFolderModal(true)}
                     >
                         <div className="flex items-center">
-                        <FolderPlus  size={15} className="text-gray-900 mr-2" />
+                        <FolderPlus  size={15} className="text-gray-900 mr-2 shrink-0" />
                             <p className="text-xs">New Folder</p>
                         </div>
                     </Button>
@@ -85,7 +86,7 @@ const Navigation = ({folder}) => {
                     onClick={()=> setNewFileModal(true)}
                     >
                         <div className="flex items-center">
-                        <FileUp  size={15} className="text-white mr-2" />
+                        <FileUp  size={15} className="text-white mr-2 shrink-0" />
                             <p className="text-xs">Upload</p>
                         </div>
                     </Button>

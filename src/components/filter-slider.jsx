@@ -1,13 +1,11 @@
 
-import {Fragment, useState} from 'react'
+import {Fragment} from 'react'
 
-import { PlusIcon, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import {Dialog, Transition} from '@headlessui/react'
 import PropTypes from 'prop-types'
 import Filter from './filter'
 import { filter } from '../utils'
-
-
 
 const FilterSlider = ({
     isOpen,
