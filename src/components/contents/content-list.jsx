@@ -25,6 +25,19 @@ const ContentList = ({ folders, files }) => {
     }
   },[type, isFile, files])
 
+  if(( type && !isFile && !folders.length) || (type && isFile && !fileItems.length)) 
+   return (
+    <div className="flex flex-col items-center space-y-4 mt-10 ">
+      <div className="text-xs text-center text-gray-500">
+      No match found
+      </div>
+      <Button 
+      onClick={onClear}
+      secondary>
+        Remove Filter
+      </Button>
+    </div>)
+
   return (
     <div className="space-y-4 px-4 py-2">
       
@@ -37,19 +50,7 @@ const ContentList = ({ folders, files }) => {
       (!type || isFile) &&
         fileItems?.map((file) => <FileBox key={file.id} file={file} />)
       }
-      {
-        !isFile || fileItems.length === 0 && 
-        <div className="flex flex-col items-center space-y-4 mt-10 ">
-          <div className="text-xs text-center text-gray-500">
-          No match found
-          </div>
-          <Button 
-          onClick={onClear}
-          secondary>
-            Remove Filter
-          </Button>
-        </div>
-      }
+      
       </div>
       
     </div>
