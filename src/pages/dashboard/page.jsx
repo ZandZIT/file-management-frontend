@@ -1,17 +1,17 @@
 import { useParams } from "react-router-dom";
-import Sidebar from "../../src/components/sidebar/sidebar";
-import Navigation from "../../src/components/ui/navigation";
-import { useCurrentUser } from "../../src/hooks/use-current-user";
-import { ROOT_FOLDER, useFolder } from "../../src/hooks/use-folder";
-import Path from "../../src/components/path";
-import EmptyState from "../../src/components/ui/empty-state";
-import { useCurrentState } from "../../src/hooks/use-current-state";
+import Sidebar from "../../components/sidebar/sidebar";
+import Navigation from "../../components/ui/navigation";
+import { useCurrentUser } from "../../hooks/use-current-user";
+import { ROOT_FOLDER, useFolder } from "../../hooks/use-folder";
+import Path from "../../components/path";
+import EmptyState from "../../components/ui/empty-state";
+import { useCurrentState } from "../../hooks/use-current-state";
 import { useEffect } from "react";
-import ContentList from "../../src/components/contents/content-list";
-import Title from "../../src/components/ui/title";
-import { useScrollTop } from "../../src/hooks/use-scroll";
+import ContentList from "../../components/contents/content-list";
+import Title from "../../components/ui/title";
+import { useScrollTop } from "../../hooks/use-scroll";
 import clsx from "clsx";
-import Loading from "../../src/components/ui/loading";
+import Loading from "../../components/ui/loading";
 
 const DashboarPage =() => {
 

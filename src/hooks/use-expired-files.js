@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getExpiredFilesByUser } from "../../actions/get-expired-files";
+import { getExpiredFilesByUser } from "../actions/get-expired-files";
 import { getAuth } from "firebase/auth";
 import { useAdmin } from "./use-admin";
 

@@ -1,12 +1,12 @@
 import { useCollection } from "react-firebase-hooks/firestore";
-import { db } from "../../firebase";
-import Sidebar from "../../src/components/sidebar/sidebar";
+import { db } from "../../../firebase";
+import Sidebar from "../../components/sidebar/sidebar";
 import UsersList from "./components/user-list";
 import { collection } from "firebase/firestore";
-import { useCurrentUser } from "../../src/hooks/use-current-user";
+import { useCurrentUser } from "../../hooks/use-current-user";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Loading from "../../src/components/ui/loading";
+import Loading from "../../components/ui/loading";
 
 const UsersPage = () => {
     const {user, loading} = useCurrentUser()

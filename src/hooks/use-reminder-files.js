@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { useAdmin } from "./use-admin";
-import { getReminderFilesByUser } from "../../actions/get-reminder-files";
+import { getReminderFilesByUser } from "../actions/get-reminder-files";
 
 export const useReminderFiles = () => {
   const { isAdmin } = useAdmin();

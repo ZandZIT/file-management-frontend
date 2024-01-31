@@ -1,10 +1,10 @@
-import Sidebar from "../../src/components/sidebar/sidebar";
+import Sidebar from "../../components/sidebar/sidebar";
 
-import ContentList from "../../src/components/contents/content-list";
-import Title from "../../src/components/ui/title";
+import ContentList from "../../components/contents/content-list";
+import Title from "../../components/ui/title";
 import { clsx } from "clsx";
-import { useScrollTop } from "../../src/hooks/use-scroll";
-import { useStaredDocs } from "../../src/hooks/use-stared-docs";
+import { useScrollTop } from "../../hooks/use-scroll";
+import { useStaredDocs } from "../../hooks/use-stared-docs";
 
 const StaredPage = () => {
 

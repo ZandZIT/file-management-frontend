@@ -1,5 +1,5 @@
 import { query, where, orderBy, onSnapshot } from "firebase/firestore";
-import { collections } from "../firebase";
+import { collections } from "../../firebase";
 
 export const getStaredFoldersByUser = async(user, callback) => {
   

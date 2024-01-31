@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
-import { getStaredFilesByUser } from "../../actions/get-stared-files";
-import { getStaredFoldersByUser } from "../../actions/get-stared-folders";
+import { getStaredFilesByUser } from "../actions/get-stared-files";
+import { getStaredFoldersByUser } from "../actions/get-stared-folders";
 
 export const useStaredDocs = () => {
 

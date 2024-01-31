@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import Avater from '../../../src/components/ui/avater';
+import Avater from '../../../components/ui/avater';
 import { useState } from 'react';
-import SettingsModal from '../../../src/components/modal/settings-modal';
+import SettingsModal from '../../../components/modal/settings-modal';
 import clsx from 'clsx';
 
 import { PencilLine, Trash } from 'lucide-react';
-import AlertModal from '../../../src/components/modal/alert-modal';
+import AlertModal from '../../../components/modal/alert-modal';
 import axios from 'axios';
 
 import toast from 'react-hot-toast';
