@@ -1,9 +1,9 @@
-import Sidebar from "../../src/components/sidebar/sidebar";
+import Sidebar from "../../components/sidebar/sidebar";
 
-import ExpiredFileBox from "../../src/components/contents/expired-file-box";
-import { useExpiredFiles } from "../../src/hooks/use-expired-files";
+import ExpiredFileBox from "../../components/contents/expired-file-box";
+import { useExpiredFiles } from "../../hooks/use-expired-files";
 import clsx from "clsx";
-import { useScrollTop } from "../../src/hooks/use-scroll";
+import { useScrollTop } from "../../hooks/use-scroll";
 
 const ExpiredPage = () => {
     const {childFiles} = useExpiredFiles();

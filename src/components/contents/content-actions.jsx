@@ -6,12 +6,12 @@ import PropTypes from 'prop-types'
 import UpdateNameModal from '../modal/update-name-modal'
 import AlertModal from '../modal/alert-modal'
 import toast from 'react-hot-toast'
-import { getRenameDocById } from '../../../actions/get-rename-doc'
+import { getRenameDocById } from '../../actions/get-rename-doc'
 import FilePreviewModal from '../modal/file-preview-modal'
-import { getDeleteFile } from '../../../actions/get-delete-file'
-import { getDeleteFolder } from '../../../actions/get-delete-folder'
-import { getTotalDocsByUser } from '../../../actions/get-total-doc'
+import { getTotalDocsByUser } from '../../actions/get-total-doc'
 import { getAuth } from 'firebase/auth'
+import { getDeleteFile } from '../../actions/get-delete-file'
+import { getDeleteFolder } from '../../actions/get-delete-folder'
 
   
 

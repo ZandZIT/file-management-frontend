@@ -3,9 +3,9 @@ import  {  useState  } from 'react'
 import { useForm, } from 'react-hook-form'
 
 
-import Button from '../../../src/components/ui/button'
-import Input from '../../../src/components/inputs/input'
-import { auth } from '../../../firebase'
+import Button from '../../../components/ui/button'
+import Input from '../../../components/inputs/input'
+import { auth } from '../../../../firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
